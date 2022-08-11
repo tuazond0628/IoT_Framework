@@ -5,9 +5,6 @@ import 'package:iot_framework/loading_page.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  // FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  // // whenever your initialization is completed, remove the splash screen:
   // FlutterNativeSplash.remove();
   runApp(const MyApp());
 }
