@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "648439518891",
+    "firebase_url": "https://iot-framework-e5959-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "iot-framework-e5959",
+    "storage_bucket": "iot-framework-e5959.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:648439518891:android:fc06d296732db1425289ee",
+        "android_client_info": {
+          "package_name": "com.iotframework.iot_framework"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "648439518891-l39v9kl9m3n9gg9i4inebdk6t49ng331.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQLUzXDUwVqhUSq3q4c9M4noQg9u-twUM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "648439518891-l39v9kl9m3n9gg9i4inebdk6t49ng331.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
