@@ -11,36 +11,33 @@ class LoadingPage extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: AnimatedSplashScreen(
-            splash: Center(
-              child: Stack(
-                children: [
-                  Lottie.asset('images/rocket.json'),
-                  Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Loading application, please wait',
-                          style: TextStyle(
-                            fontFamily: 'Proxima',
-                            fontSize: 22,
-                            background: Paint()
-                              ..strokeWidth = 22
-                              ..color = Colors.pinkAccent
-                              ..strokeJoin = StrokeJoin.round
-                              ..strokeCap = StrokeCap.round
-                              ..style = PaintingStyle.stroke,
-                            color: Colors.white,
-                          ),
+            splash: Stack(
+              children: [
+                Center(child: Lottie.asset('images/rocket.json')),
+                Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Loading application, please wait',
+                        style: TextStyle(
+                          fontFamily: 'Proxima',
+                          fontSize: 20,
+                          background: Paint()
+                            ..strokeWidth = 20
+                            ..color = Colors.pinkAccent
+                            ..strokeJoin = StrokeJoin.round
+                            ..strokeCap = StrokeCap.round
+                            ..style = PaintingStyle.stroke,
+                          color: Colors.white,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 50),
-                ],
-              ),
+                ),
+              ],
             ),
             // animationDuration: const Duration(seconds: 3),
             splashIconSize: 500,
