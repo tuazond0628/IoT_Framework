@@ -42,31 +42,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 40,
-            ),
-            Container(
-              margin: const EdgeInsets.all(0.0),
-              padding: const EdgeInsets.all(5.0),
-              alignment: FractionalOffset.topLeft,
-              child: const Text(
-                'Powered by Data:',
-                style: TextStyle(
-                  fontFamily: 'Proxima',
-                  color: Colors.white,
-                  fontSize: 19,
-                  fontWeight: FontWeight.bold,
-                  shadows: [
-                    Shadow(
-                      blurRadius: 10.0,
-                      color: Colors.black87,
-                      offset: Offset(5.0, 5.0),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 40,
+              height: 100,
             ),
             Image.asset(
               'images/tup.png',
@@ -74,7 +50,7 @@ class HomePage extends StatelessWidget {
               width: 190,
             ),
             const SizedBox(
-              height: 40,
+              height: 60,
             ),
             const Center(
               // margin: const EdgeInsets.all(10.0),

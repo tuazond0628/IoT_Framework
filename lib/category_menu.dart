@@ -13,7 +13,7 @@ class CategoryMenuPage extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             shadowColor: const Color(0xFF1D63A3),
-            title: const Text('CATEGORIES',
+            title: const Text('USER EXPERIENCE',
                 style: TextStyle(
                   fontFamily: 'Proxima',
                   fontSize: 27,
