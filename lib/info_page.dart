@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:lottie/lottie.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class InfoPage extends StatelessWidget {
+  const InfoPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 100,
+              height: 50,
             ),
             Image.asset(
               'images/tup.png',
@@ -50,7 +49,7 @@ class HomePage extends StatelessWidget {
               width: 190,
             ),
             const SizedBox(
-              height: 60,
+              height: 40,
             ),
             const Center(
               // margin: const EdgeInsets.all(10.0),
@@ -73,6 +72,14 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            Image.asset(
+              'images/alexa.png',
+              height: 150,
+              width: 150,
+            ),
           ],
         ),
       ),
@@ -83,7 +90,7 @@ class HomePage extends StatelessWidget {
 // import 'category_page.dart';
 
 // class  xc m  extends StatelessWidget {
-//   const HomePage({Key? key}) : super(key: key);
+//   const InfoPage({Key? key}) : super(key: key);
 
 //   @override
 //   Widget build(BuildContext context) {

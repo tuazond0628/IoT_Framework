@@ -1,5 +1,3 @@
-// import 'dart:ffi';
-
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,24 +5,22 @@ import 'package:flutter/material.dart';
 import 'package:iot_framework/models/Routine.dart';
 import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-// import 'package:url_launcher/url_launcher.dart';
-// import 'package:url_launcher/url_launcher_string.dart';
-// import 'package:url_launcher/link.dart';
-// import 'package:url_launcher/link.dart';
 
-class CategoriesPage extends StatefulWidget {
-  final String qcategory;
+class RoutinePage extends StatefulWidget {
+  final String qorderBy;
+  final String qequalTo;
 
-  const CategoriesPage({
+  const RoutinePage({
     Key? key,
-    required this.qcategory,
+    required this.qorderBy,
+    required this.qequalTo,
   }) : super(key: key);
 
   @override
-  State<CategoriesPage> createState() => _CategoriesPageState();
+  State<RoutinePage> createState() => _RoutinePageState();
 }
 
-class _CategoriesPageState extends State<CategoriesPage>
+class _RoutinePageState extends State<RoutinePage>
     with SingleTickerProviderStateMixin {
   TextEditingController controller = TextEditingController();
   late AnimationController animationController;
@@ -38,14 +34,8 @@ class _CategoriesPageState extends State<CategoriesPage>
   int key2 = 0;
   String link = '';
 
-  late UniqueKey keyTile;
-  bool isExpanded = false;
-
-  // bool value = true;
-
   @override
   void initState() {
-    keyTile = UniqueKey();
     super.initState();
     routineList = Routine(
         0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
@@ -72,38 +62,23 @@ class _CategoriesPageState extends State<CategoriesPage>
     super.dispose();
   }
 
-  // void expandTile() {
-  //   setState(() {
-  //     isExpanded = true;
-  //     keyTile = UniqueKey();
-  //   });
-  // }
-
-  // void shrinkTile() {
-  //   setState(() {
-  //     isExpanded = false;
-  //     keyTile = UniqueKey();
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF1D63A3),
+      backgroundColor: Colors.grey[300],
       appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
-          // shadowColor: const Color(0xFF013169),
-          title: Text('${widget.qcategory} Routines',
+          title: Text('${widget.qequalTo} Routines',
               style: const TextStyle(
                 fontFamily: 'Proxima',
                 fontSize: 27,
-                color: Colors.white,
+                color: Colors.black87,
                 shadows: [
                   Shadow(
                     blurRadius: 10.0,
-                    color: Colors.black87,
+                    color: Colors.white,
                     offset: Offset(5.0, 5.0),
                   ),
                 ],
@@ -142,24 +117,16 @@ class _CategoriesPageState extends State<CategoriesPage>
                   child: FirebaseAnimatedList(
                       shrinkWrap: true,
                       query: firebaseRef
-                          .orderByChild('Category')
-                          .equalTo(widget.qcategory),
+                          .orderByChild(widget.qorderBy)
+                          .equalTo(widget.qequalTo),
                       itemBuilder: (BuildContext context, DataSnapshot snapshot,
                           Animation<double> animation, int index) {
-                        int key = (snapshot.value as dynamic)['Routine_Key'];
-                        String cardImage =
-                            (snapshot.value as dynamic)['Images'];
-                        String name =
-                            (snapshot.value as dynamic)['Routine_Name'];
-
-                        // link = (snapshot.value as dynamic)['URL'];
-
                         routinesList.add(Routine.fromSnapshot(snapshot));
-                        // if (frequency == 'Single') {
-                        //   cardImage = 'images/ssunset.jpg';
-                        // } else {
-                        //   cardImage = 'images/svoice.jpg';
-                        // }
+                        int key = routinesList[index].key;
+                        String cardImage = routinesList[index].images;
+                        String name = routinesList[index].numberofaction +
+                            routinesList[index].routinename +
+                            routinesList[index].description;
 
                         if (key2 != key) {
                           key2 = key;
@@ -169,7 +136,7 @@ class _CategoriesPageState extends State<CategoriesPage>
                               padding: const EdgeInsets.all(10.0),
                               child: Card(
                                 clipBehavior: Clip.antiAlias,
-                                elevation: 16,
+                                elevation: 20,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12)),
                                 child: ClipRRect(
@@ -180,10 +147,9 @@ class _CategoriesPageState extends State<CategoriesPage>
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Stack(
-                                        // fit: StackFit.expand,
                                         children: [
                                           Ink.image(
-                                              height: 240,
+                                              height: 220,
                                               image: AssetImage(cardImage),
                                               fit: BoxFit.fitWidth,
                                               child: InkWell(
@@ -205,8 +171,13 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                     fontSize: 18,
                                                     background: Paint()
                                                       ..strokeWidth = 18
-                                                      ..color =
-                                                          Colors.pinkAccent
+                                                      ..color = routinesList[
+                                                                      index]
+                                                                  .numberofaction ==
+                                                              'Single'
+                                                          ? Colors.pinkAccent
+                                                          : const Color(
+                                                              0xFF1D63A3)
                                                       ..strokeJoin =
                                                           StrokeJoin.round
                                                       ..strokeCap =
@@ -238,37 +209,48 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                           backgroundColor:
                                                               MaterialStateProperty
                                                                   .all<Color>(
-                                                            const Color(
-                                                                0xFF1D63A3),
+                                                            routinesList[index]
+                                                                        .numberofaction ==
+                                                                    'Single'
+                                                                ? const Color(
+                                                                    0xFF1D63A3)
+                                                                : Colors
+                                                                    .pinkAccent,
                                                           ),
-                                                          shape: MaterialStateProperty.all<
-                                                                  RoundedRectangleBorder>(
-                                                              RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              18.0),
-                                                                  side: const BorderSide(
-                                                                      color: Colors
-                                                                          .pinkAccent))))),
+                                                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                      18.0),
+                                                              side: BorderSide(
+                                                                  color: routinesList[index]
+                                                                              .numberofaction ==
+                                                                          'Single'
+                                                                      ? Colors
+                                                                          .pinkAccent
+                                                                      : const Color(
+                                                                          0xFF1D63A3)))))),
                                                 ),
                                               ],
                                             ),
                                           ),
                                           SizedBox(
-                                            height: 230,
+                                            height: 205,
                                             child: Align(
                                               alignment: Alignment.bottomCenter,
                                               child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 10.0),
+                                                padding:
+                                                    const EdgeInsets.all(16)
+                                                        .copyWith(top: 0),
                                                 child: Text(
                                                   routinesList[index]
                                                       .description,
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                     fontFamily: 'Proxima',
-                                                    fontSize: 18,
+                                                    fontSize: 20,
+                                                    height: 1.8,
+                                                    overflow:
+                                                        TextOverflow.visible,
                                                     shadows: const [
                                                       Shadow(
                                                         blurRadius: 10.0,
@@ -278,14 +260,10 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                       ),
                                                     ],
                                                     background: Paint()
-                                                      ..strokeWidth = 15
+                                                      ..strokeWidth = 18
                                                       ..color = Colors.black38
-                                                      ..strokeJoin =
-                                                          StrokeJoin.round
-                                                      ..strokeCap =
-                                                          StrokeCap.round
                                                       ..style =
-                                                          PaintingStyle.stroke,
+                                                          PaintingStyle.fill,
                                                     color: Colors.white,
                                                   ),
                                                 ),
@@ -300,22 +278,39 @@ class _CategoriesPageState extends State<CategoriesPage>
                                           padding: const EdgeInsets.all(0.0)
                                               .copyWith(top: 0),
                                           child: ExpansionTile(
-                                            key: keyTile,
-                                            initiallyExpanded: isExpanded,
+                                            backgroundColor: routinesList[index]
+                                                        .numberofaction ==
+                                                    'Single'
+                                                ? Colors.pinkAccent
+                                                : const Color(0xFF1D63A3),
+                                            collapsedBackgroundColor:
+                                                routinesList[index]
+                                                            .numberofaction ==
+                                                        'Single'
+                                                    ? Colors.pinkAccent
+                                                    : const Color(0xFF1D63A3),
+                                            subtitle: const Text(
+                                              'Click here for more details.',
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                fontFamily: 'Proxima',
+                                                fontSize: 13,
+                                                height: 1.2,
+                                                fontWeight: FontWeight.bold,
+                                                overflow: TextOverflow.visible,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            childrenPadding:
+                                                const EdgeInsets.all(16)
+                                                    .copyWith(top: 0),
                                             title: Text(
-                                              ' $name',
+                                              routinesList[index].routinename,
                                               textAlign: TextAlign.left,
                                               style: const TextStyle(
                                                   fontFamily: 'Proxima',
-                                                  color: Colors.black,
+                                                  color: Colors.white,
                                                   fontSize: 18,
-                                                  shadows: [
-                                                    Shadow(
-                                                      blurRadius: 10.0,
-                                                      color: Colors.white,
-                                                      offset: Offset(5.0, 5.0),
-                                                    ),
-                                                  ],
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             children: [
@@ -325,16 +320,9 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                   'Routine ID: ${routinesList[index].key}',
                                                   style: const TextStyle(
                                                       fontFamily: 'Proxima',
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontSize: 16,
-                                                      shadows: [
-                                                        Shadow(
-                                                          blurRadius: 10.0,
-                                                          color: Colors.white,
-                                                          offset:
-                                                              Offset(5.0, 5.0),
-                                                        ),
-                                                      ],
+                                                      height: 1.2,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
@@ -345,16 +333,9 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                   'Device: ${routinesList[index].devicegroup}',
                                                   style: const TextStyle(
                                                       fontFamily: 'Proxima',
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontSize: 16,
-                                                      shadows: [
-                                                        Shadow(
-                                                          blurRadius: 10.0,
-                                                          color: Colors.white,
-                                                          offset:
-                                                              Offset(5.0, 5.0),
-                                                        ),
-                                                      ],
+                                                      height: 1.2,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
@@ -365,16 +346,9 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                   'Trigger: ${routinesList[index].triggergroup}',
                                                   style: const TextStyle(
                                                       fontFamily: 'Proxima',
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontSize: 16,
-                                                      shadows: [
-                                                        Shadow(
-                                                          blurRadius: 10.0,
-                                                          color: Colors.white,
-                                                          offset:
-                                                              Offset(5.0, 5.0),
-                                                        ),
-                                                      ],
+                                                      height: 1.2,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
@@ -385,16 +359,9 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                   'Action: ${routinesList[index].actiongroup}',
                                                   style: const TextStyle(
                                                       fontFamily: 'Proxima',
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontSize: 16,
-                                                      shadows: [
-                                                        Shadow(
-                                                          blurRadius: 10.0,
-                                                          color: Colors.white,
-                                                          offset:
-                                                              Offset(5.0, 5.0),
-                                                        ),
-                                                      ],
+                                                      height: 1.2,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
@@ -405,16 +372,9 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                   'Tags: ${routinesList[index].tags}',
                                                   style: const TextStyle(
                                                       fontFamily: 'Proxima',
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontSize: 16,
-                                                      shadows: [
-                                                        Shadow(
-                                                          blurRadius: 10.0,
-                                                          color: Colors.white,
-                                                          offset:
-                                                              Offset(5.0, 5.0),
-                                                        ),
-                                                      ],
+                                                      height: 1.2,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
@@ -425,24 +385,25 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                   'Schedule: ${routinesList[index].schedule}',
                                                   style: const TextStyle(
                                                       fontFamily: 'Proxima',
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontSize: 16,
-                                                      shadows: [
-                                                        Shadow(
-                                                          blurRadius: 10.0,
-                                                          color: Colors.white,
-                                                          offset:
-                                                              Offset(5.0, 5.0),
-                                                        ),
-                                                      ],
+                                                      height: 1.2,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
                                               ),
-                                              Row(
-                                                children: const [
-                                                  Text(''),
-                                                ],
+                                              Align(
+                                                alignment: Alignment.bottomLeft,
+                                                child: Text(
+                                                  'Number of Action: ${routinesList[index].numberofaction}',
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Proxima',
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                      height: 1.2,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -460,7 +421,7 @@ class _CategoriesPageState extends State<CategoriesPage>
                               padding: const EdgeInsets.all(10.0),
                               child: Card(
                                 clipBehavior: Clip.antiAlias,
-                                elevation: 16,
+                                elevation: 20,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12)),
                                 child: ClipRRect(
@@ -471,10 +432,9 @@ class _CategoriesPageState extends State<CategoriesPage>
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       Stack(
-                                        // fit: StackFit.expand,
                                         children: [
                                           Ink.image(
-                                              height: 240,
+                                              height: 220,
                                               image: AssetImage(cardImage),
                                               fit: BoxFit.fitWidth,
                                               child: InkWell(
@@ -496,8 +456,13 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                     fontSize: 18,
                                                     background: Paint()
                                                       ..strokeWidth = 18
-                                                      ..color =
-                                                          Colors.pinkAccent
+                                                      ..color = routinesList[
+                                                                      index]
+                                                                  .numberofaction ==
+                                                              'Single'
+                                                          ? Colors.pinkAccent
+                                                          : const Color(
+                                                              0xFF1D63A3)
                                                       ..strokeJoin =
                                                           StrokeJoin.round
                                                       ..strokeCap =
@@ -529,37 +494,48 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                           backgroundColor:
                                                               MaterialStateProperty
                                                                   .all<Color>(
-                                                            const Color(
-                                                                0xFF1D63A3),
+                                                            routinesList[index]
+                                                                        .numberofaction ==
+                                                                    'Single'
+                                                                ? const Color(
+                                                                    0xFF1D63A3)
+                                                                : Colors
+                                                                    .pinkAccent,
                                                           ),
-                                                          shape: MaterialStateProperty.all<
-                                                                  RoundedRectangleBorder>(
-                                                              RoundedRectangleBorder(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              18.0),
-                                                                  side: const BorderSide(
-                                                                      color: Colors
-                                                                          .pinkAccent))))),
+                                                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+                                                              borderRadius:
+                                                                  BorderRadius.circular(
+                                                                      18.0),
+                                                              side: BorderSide(
+                                                                  color: routinesList[index]
+                                                                              .numberofaction ==
+                                                                          'Single'
+                                                                      ? Colors
+                                                                          .pinkAccent
+                                                                      : const Color(
+                                                                          0xFF1D63A3)))))),
                                                 ),
                                               ],
                                             ),
                                           ),
                                           SizedBox(
-                                            height: 230,
+                                            height: 205,
                                             child: Align(
                                               alignment: Alignment.bottomCenter,
                                               child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 10.0),
+                                                padding:
+                                                    const EdgeInsets.all(16)
+                                                        .copyWith(top: 0),
                                                 child: Text(
                                                   routinesList[index]
                                                       .description,
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
                                                     fontFamily: 'Proxima',
-                                                    fontSize: 18,
+                                                    fontSize: 20,
+                                                    height: 1.8,
+                                                    overflow:
+                                                        TextOverflow.visible,
                                                     shadows: const [
                                                       Shadow(
                                                         blurRadius: 10.0,
@@ -569,14 +545,10 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                       ),
                                                     ],
                                                     background: Paint()
-                                                      ..strokeWidth = 15
+                                                      ..strokeWidth = 18
                                                       ..color = Colors.black38
-                                                      ..strokeJoin =
-                                                          StrokeJoin.round
-                                                      ..strokeCap =
-                                                          StrokeCap.round
                                                       ..style =
-                                                          PaintingStyle.stroke,
+                                                          PaintingStyle.fill,
                                                     color: Colors.white,
                                                   ),
                                                 ),
@@ -591,22 +563,39 @@ class _CategoriesPageState extends State<CategoriesPage>
                                           padding: const EdgeInsets.all(0.0)
                                               .copyWith(top: 0),
                                           child: ExpansionTile(
-                                            key: keyTile,
-                                            initiallyExpanded: isExpanded,
+                                            backgroundColor: routinesList[index]
+                                                        .numberofaction ==
+                                                    'Single'
+                                                ? Colors.pinkAccent
+                                                : const Color(0xFF1D63A3),
+                                            collapsedBackgroundColor:
+                                                routinesList[index]
+                                                            .numberofaction ==
+                                                        'Single'
+                                                    ? Colors.pinkAccent
+                                                    : const Color(0xFF1D63A3),
+                                            subtitle: const Text(
+                                              'Click here for more details.',
+                                              textAlign: TextAlign.left,
+                                              style: TextStyle(
+                                                fontFamily: 'Proxima',
+                                                fontSize: 13,
+                                                height: 1.2,
+                                                fontWeight: FontWeight.bold,
+                                                overflow: TextOverflow.visible,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                            childrenPadding:
+                                                const EdgeInsets.all(16)
+                                                    .copyWith(top: 0),
                                             title: Text(
-                                              ' $name',
+                                              routinesList[index].routinename,
                                               textAlign: TextAlign.left,
                                               style: const TextStyle(
                                                   fontFamily: 'Proxima',
-                                                  color: Colors.black,
+                                                  color: Colors.white,
                                                   fontSize: 18,
-                                                  shadows: [
-                                                    Shadow(
-                                                      blurRadius: 10.0,
-                                                      color: Colors.white,
-                                                      offset: Offset(5.0, 5.0),
-                                                    ),
-                                                  ],
                                                   fontWeight: FontWeight.bold),
                                             ),
                                             children: [
@@ -616,16 +605,9 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                   'Routine ID: ${routinesList[index].key}',
                                                   style: const TextStyle(
                                                       fontFamily: 'Proxima',
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontSize: 16,
-                                                      shadows: [
-                                                        Shadow(
-                                                          blurRadius: 10.0,
-                                                          color: Colors.white,
-                                                          offset:
-                                                              Offset(5.0, 5.0),
-                                                        ),
-                                                      ],
+                                                      height: 1.2,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
@@ -636,16 +618,9 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                   'Device: ${routinesList[index].devicegroup}',
                                                   style: const TextStyle(
                                                       fontFamily: 'Proxima',
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontSize: 16,
-                                                      shadows: [
-                                                        Shadow(
-                                                          blurRadius: 10.0,
-                                                          color: Colors.white,
-                                                          offset:
-                                                              Offset(5.0, 5.0),
-                                                        ),
-                                                      ],
+                                                      height: 1.2,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
@@ -656,16 +631,9 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                   'Trigger: ${routinesList[index].triggergroup}',
                                                   style: const TextStyle(
                                                       fontFamily: 'Proxima',
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontSize: 16,
-                                                      shadows: [
-                                                        Shadow(
-                                                          blurRadius: 10.0,
-                                                          color: Colors.white,
-                                                          offset:
-                                                              Offset(5.0, 5.0),
-                                                        ),
-                                                      ],
+                                                      height: 1.2,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
@@ -676,16 +644,9 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                   'Action: ${routinesList[index].actiongroup}',
                                                   style: const TextStyle(
                                                       fontFamily: 'Proxima',
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontSize: 16,
-                                                      shadows: [
-                                                        Shadow(
-                                                          blurRadius: 10.0,
-                                                          color: Colors.white,
-                                                          offset:
-                                                              Offset(5.0, 5.0),
-                                                        ),
-                                                      ],
+                                                      height: 1.2,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
@@ -696,16 +657,9 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                   'Tags: ${routinesList[index].tags}',
                                                   style: const TextStyle(
                                                       fontFamily: 'Proxima',
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontSize: 16,
-                                                      shadows: [
-                                                        Shadow(
-                                                          blurRadius: 10.0,
-                                                          color: Colors.white,
-                                                          offset:
-                                                              Offset(5.0, 5.0),
-                                                        ),
-                                                      ],
+                                                      height: 1.2,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
@@ -716,24 +670,25 @@ class _CategoriesPageState extends State<CategoriesPage>
                                                   'Schedule: ${routinesList[index].schedule}',
                                                   style: const TextStyle(
                                                       fontFamily: 'Proxima',
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       fontSize: 16,
-                                                      shadows: [
-                                                        Shadow(
-                                                          blurRadius: 10.0,
-                                                          color: Colors.white,
-                                                          offset:
-                                                              Offset(5.0, 5.0),
-                                                        ),
-                                                      ],
+                                                      height: 1.2,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 ),
                                               ),
-                                              Row(
-                                                children: const [
-                                                  Text(''),
-                                                ],
+                                              Align(
+                                                alignment: Alignment.bottomLeft,
+                                                child: Text(
+                                                  'Number of Action: ${routinesList[index].numberofaction}',
+                                                  style: const TextStyle(
+                                                      fontFamily: 'Proxima',
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                      height: 1.2,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -764,7 +719,7 @@ class _CategoriesPageState extends State<CategoriesPage>
       builder: (context) => Dialog(
               child: Column(mainAxisSize: MainAxisSize.min, children: [
             Lottie.asset(
-              'images/running.json',
+              'images/lottie/running.json',
               repeat: true,
               controller: animationController,
               onLoaded: (compostion) {
@@ -804,7 +759,7 @@ class _CategoriesPageState extends State<CategoriesPage>
       builder: (context) => Dialog(
               child: Column(mainAxisSize: MainAxisSize.min, children: [
             Lottie.asset(
-              'images/success.json',
+              'images/lottie/success.json',
             ),
             const Center(
               child: Text(

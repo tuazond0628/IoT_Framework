@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:iot_framework/device_page.dart';
+import 'package:iot_framework/models/count.dart';
+import 'package:iot_framework/routine_page.dart';
 import 'package:lottie/lottie.dart';
 
 class DeviceMenuPage extends StatefulWidget {
@@ -17,39 +18,39 @@ class _DeviceMenuPageState extends State<DeviceMenuPage> {
   List<Devices> list = [
     Devices(
         device: 'Bulb',
-        subTitle: 'Flutter developer',
-        image: 'images/bulb.json',
-        isFavourite: true),
-    Devices(
-        device: 'Plug',
-        subTitle: 'Github.com',
-        image: 'images/plug.json',
-        isFavourite: true),
+        orderby: 'Device',
+        equalto: 'Bulb',
+        image: 'images/lottie/bulb.json'),
+    // Devices(
+    //     device: 'Plug',
+    //     orderby: 'Device',
+    //     equalto: 'Plug',
+    //     image: 'images/lottie/plug.json'),
     Devices(
         device: 'Sensor',
-        subTitle: 'Marketing guy',
-        image: 'images/sensor.json',
-        isFavourite: false),
+        orderby: 'Device',
+        equalto: 'Sensor',
+        image: 'images/lottie/sensor.json'),
     Devices(
         device: 'Smartphone',
-        subTitle: 'Java developer',
-        image: 'images/phone.json',
-        isFavourite: true),
+        orderby: 'Device',
+        equalto: 'Smartphone',
+        image: 'images/lottie/phone.json'),
     Devices(
         device: 'Speaker',
-        subTitle: 'Blockchain is new trend',
-        image: 'images/speaker2.json',
-        isFavourite: true),
-    Devices(
-        device: 'Switch',
-        subTitle: 'Exploring world',
-        image: 'images/switch.json',
-        isFavourite: false),
+        orderby: 'Device',
+        equalto: 'Speaker',
+        image: 'images/lottie/speaker2.json'),
+    // Devices(
+    //     device: 'Switch',
+    //     orderby: 'Device',
+    //     equalto: 'Switch',
+    //     image: 'images/lottie/switch.json'),
     Devices(
         device: 'Smart Remote',
-        subTitle: 'TRS on Fiverr',
-        image: 'images/remote.json',
-        isFavourite: false),
+        orderby: 'Device',
+        equalto: 'Smart Remote',
+        image: 'images/lottie/remote.json'),
   ];
 
   @override
@@ -61,7 +62,7 @@ class _DeviceMenuPageState extends State<DeviceMenuPage> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           shadowColor: const Color(0xFF1D63A3),
-          title: const Text('DEVICES',
+          title: const Text('SMART DEVICES',
               style: TextStyle(
                 fontFamily: 'Proxima',
                 fontSize: 27,
@@ -90,143 +91,62 @@ class _DeviceMenuPageState extends State<DeviceMenuPage> {
               Expanded(
                   child: Material(
                 color: Colors.transparent,
-                child: ListView.builder(
-                    itemExtent: 135.0,
-                    itemCount: list.length,
-                    itemBuilder: (context, index) {
-                      String devices = list[index].device;
-
-                      if (controller.text.isEmpty) {
-                        return InkWell(
-                            highlightColor: Colors.white10.withOpacity(0.4),
-                            splashColor: Colors.white.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(18.0),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) =>
-                                          DevicesPage(qdevices: devices))));
-                            },
-                            child: Stack(
-                              children: [
-                                Card(
-                                  color: Colors.pinkAccent,
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 5, horizontal: 2),
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(20),
-                                          bottomLeft: Radius.circular(20),
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20)),
-                                      side: BorderSide(
-                                          width: 3, color: Colors.pinkAccent)),
-                                  elevation: 10,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      // CircleAvatar(
-                                      Lottie.asset(
-                                        (list[index].image),
-                                        // repeat: false,
-                                        // reverse: false,
-                                        // animate: false,
-                                      ),
-                                      //   maxRadius: 30,
-                                      //   minRadius: 30,
-                                      // ),
-                                      Center(
-                                          child: Text(
-                                        devices,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          fontFamily: 'Proxima',
-                                          color: Colors.white,
-                                          fontSize: 26,
-                                          shadows: [
-                                            Shadow(
-                                              blurRadius: 10.0,
-                                              color: Colors.black87,
-                                              offset: Offset(5.0, 5.0),
-                                            ),
-                                          ],
-                                        ),
-                                      )),
-                                    ],
+                child: GridView.builder(
+                  itemCount: list.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Material(
+                      child: InkWell(
+                        highlightColor: Colors.white10.withOpacity(0.4),
+                        splashColor: Colors.white.withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(18.0),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) => RoutinePage(
+                                        qorderBy: list[index].orderby,
+                                        qequalTo: list[index].equalto,
+                                      ))));
+                        },
+                        child: GridTile(
+                          header: CountRoutine(
+                            qorderBy: list[index].orderby,
+                            qequalTo: list[index].equalto,
+                          ),
+                          footer: Container(
+                            height: 60,
+                            alignment: Alignment.center,
+                            color: Colors.black45,
+                            child: Text(
+                              list[index].device,
+                              textAlign: TextAlign.left,
+                              style: const TextStyle(
+                                fontFamily: 'Proxima',
+                                color: Colors.white,
+                                fontSize: 24,
+                                shadows: [
+                                  Shadow(
+                                    blurRadius: 10.0,
+                                    color: Colors.black87,
+                                    offset: Offset(5.0, 5.0),
                                   ),
-                                ),
-                              ],
-                            ));
-                      } else if (devices
-                          .toLowerCase()
-                          .contains(controller.text.toLowerCase())) {
-                        return InkWell(
-                            highlightColor: Colors.orange.withOpacity(0.4),
-                            splashColor: Colors.orangeAccent.withOpacity(0.5),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) =>
-                                          DevicesPage(qdevices: devices))));
-                            },
-                            child: Stack(
-                              children: [
-                                Card(
-                                  color: Colors.pinkAccent,
-                                  margin: const EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 20),
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.only(
-                                          bottomRight: Radius.circular(20),
-                                          bottomLeft: Radius.circular(20),
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20)),
-                                      side: BorderSide(
-                                          width: 2, color: Color(0xFF1D63A3))),
-                                  elevation: 10,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      // CircleAvatar(
-                                      Lottie.network(
-                                        (list[index].image),
-                                        // repeat: false,
-                                        // reverse: false,
-                                        // animate: false,
-                                      ),
-                                      //   maxRadius: 30,
-                                      //   minRadius: 30,
-                                      // ),
-                                      Center(
-                                          child: Text(
-                                        devices,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          fontFamily: 'Proxima',
-                                          color: Colors.white,
-                                          fontSize: 28,
-                                          shadows: [
-                                            Shadow(
-                                              blurRadius: 10.0,
-                                              color: Colors.black87,
-                                              offset: Offset(5.0, 5.0),
-                                            ),
-                                          ],
-                                        ),
-                                      )),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ));
-                      } else {
-                        return Container();
-                      }
-                    }),
+                                ],
+                              ),
+                            ),
+                          ),
+                          child: Lottie.asset(list[index].image,
+                              fit: BoxFit.cover),
+                        ),
+                      ),
+                    );
+                  },
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 25.0,
+                      crossAxisSpacing: 10.0),
+                  padding: const EdgeInsets.all(10),
+                  shrinkWrap: true,
+                ),
               ))
             ],
           ),
@@ -237,12 +157,12 @@ class _DeviceMenuPageState extends State<DeviceMenuPage> {
 }
 
 class Devices {
-  String device, image, subTitle;
-  bool isFavourite;
+  String device, orderby, equalto, image;
 
-  Devices(
-      {required this.device,
-      required this.isFavourite,
-      required this.image,
-      required this.subTitle});
+  Devices({
+    required this.device,
+    required this.orderby,
+    required this.equalto,
+    required this.image,
+  });
 }

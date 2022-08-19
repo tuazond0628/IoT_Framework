@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:iot_framework/trigger_page.dart';
+import 'package:iot_framework/models/count.dart';
+import 'package:iot_framework/routine_page.dart';
 import 'package:lottie/lottie.dart';
 
 class TriggerMenuPage extends StatefulWidget {
@@ -12,42 +13,42 @@ class TriggerMenuPage extends StatefulWidget {
 class _TriggerMenuPageState extends State<TriggerMenuPage> {
   TextEditingController controller = TextEditingController();
 
-  List<Devices> list = [
-    Devices(
-        device: 'Alarm',
-        subTitle: 'Flutter developer',
-        image: 'images/alarm.json',
-        isFavourite: true),
-    Devices(
-        device: 'Device',
-        subTitle: 'Github.com',
-        image: 'images/device.json',
-        isFavourite: true),
-    Devices(
-        device: 'Guard',
-        subTitle: 'Marketing guy',
-        image: 'images/guard.json',
-        isFavourite: false),
-    Devices(
-        device: 'Location',
-        subTitle: 'Java developer',
-        image: 'images/location.json',
-        isFavourite: true),
-    Devices(
-        device: 'Schedule',
-        subTitle: 'Blockchain is new trend',
-        image: 'images/schedule.json',
-        isFavourite: true),
-    Devices(
-        device: 'Sound',
-        subTitle: 'Exploring world',
-        image: 'images/sound.json',
-        isFavourite: false),
-    Devices(
-        device: 'Speaker',
-        subTitle: 'TRS on Fiverr',
-        image: 'images/speaker.json',
-        isFavourite: false),
+  List<Trigger> list = [
+    Trigger(
+        trigger: 'Alarm',
+        orderby: 'Trigger',
+        equalto: 'Alarm',
+        image: 'images/lottie/alarm.json'),
+    Trigger(
+        trigger: 'Device',
+        orderby: 'Trigger',
+        equalto: 'Device',
+        image: 'images/lottie/device.json'),
+    Trigger(
+        trigger: 'Guard',
+        orderby: 'Trigger',
+        equalto: 'Guard',
+        image: 'images/lottie/guard.json'),
+    Trigger(
+        trigger: 'Location',
+        orderby: 'Trigger',
+        equalto: 'Guard',
+        image: 'images/lottie/location.json'),
+    Trigger(
+        trigger: 'Schedule',
+        orderby: 'Trigger',
+        equalto: 'Schedule',
+        image: 'images/lottie/schedule.json'),
+    Trigger(
+        trigger: 'Sound',
+        orderby: 'Trigger',
+        equalto: 'Sound',
+        image: 'images/lottie/sound.json'),
+    Trigger(
+        trigger: 'Speaker',
+        orderby: 'Trigger',
+        equalto: 'Speaker',
+        image: 'images/lottie/speaker.json'),
   ];
 
   @override
@@ -59,7 +60,7 @@ class _TriggerMenuPageState extends State<TriggerMenuPage> {
           backgroundColor: Colors.transparent,
           elevation: 0,
           // shadowColor: const Color(0xFF1D63A3),
-          title: const Text('TRIGGERS',
+          title: const Text('AUTOMATION TRIGGERS',
               style: TextStyle(
                 fontFamily: 'Proxima',
                 fontSize: 27,
@@ -93,7 +94,7 @@ class _TriggerMenuPageState extends State<TriggerMenuPage> {
                     itemExtent: 130.0,
                     itemCount: list.length,
                     itemBuilder: (context, index) {
-                      String devices = list[index].device;
+                      String devices = list[index].trigger;
 
                       return InkWell(
                           highlightColor: Colors.white10.withOpacity(0.4),
@@ -103,8 +104,10 @@ class _TriggerMenuPageState extends State<TriggerMenuPage> {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: ((context) =>
-                                        TriggerPage(qtrigger: devices))));
+                                    builder: ((context) => RoutinePage(
+                                          qorderBy: list[index].orderby,
+                                          qequalTo: list[index].equalto,
+                                        ))));
                           },
                           child: Stack(
                             children: [
@@ -150,6 +153,12 @@ class _TriggerMenuPageState extends State<TriggerMenuPage> {
                                         ],
                                       ),
                                     )),
+                                    const SizedBox(height: 40),
+                                    Center(
+                                        child: CountRoutine(
+                                      qorderBy: list[index].orderby,
+                                      qequalTo: list[index].equalto,
+                                    )),
                                   ],
                                 ),
                               ),
@@ -165,49 +174,12 @@ class _TriggerMenuPageState extends State<TriggerMenuPage> {
   }
 }
 
-class Devices {
-  String device, image, subTitle;
-  bool isFavourite;
+class Trigger {
+  String trigger, equalto, orderby, image;
 
-  Devices(
-      {required this.device,
-      required this.isFavourite,
-      required this.image,
-      required this.subTitle});
-}
-
-//Costom CLipper class with Path
-class WaveClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.lineTo(
-        0, size.height); //start path with this if you are making at bottom
-
-    var firstStart = Offset(size.width / 5, size.height);
-    //fist point of quadratic bezier curve
-    var firstEnd = Offset(size.width / 2.25, size.height - 50.0);
-    //second point of quadratic bezier curve
-    path.quadraticBezierTo(
-        firstStart.dx, firstStart.dy, firstEnd.dx, firstEnd.dy);
-
-    var secondStart =
-        Offset(size.width - (size.width / 3.24), size.height - 105);
-    //third point of quadratic bezier curve
-    var secondEnd = Offset(size.width, size.height - 10);
-    //fourth point of quadratic bezier curve
-    path.quadraticBezierTo(
-        secondStart.dx, secondStart.dy, secondEnd.dx, secondEnd.dy);
-
-    path.lineTo(
-        size.width, 0); //end with this path if you are making wave at bottom
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return false; //if new instance have different instance than old instance
-    //then you must return true;
-  }
+  Trigger(
+      {required this.trigger,
+      required this.equalto,
+      required this.orderby,
+      required this.image});
 }

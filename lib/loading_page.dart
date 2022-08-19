@@ -13,7 +13,7 @@ class LoadingPage extends StatelessWidget {
         child: AnimatedSplashScreen(
             splash: Stack(
               children: [
-                Center(child: Lottie.asset('images/rocket.json')),
+                Center(child: Lottie.asset('images/lottie/rocket.json')),
                 Center(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

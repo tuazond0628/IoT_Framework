@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:iot_framework/device_menu.dart';
-import 'package:iot_framework/home_page.dart';
 import 'package:iot_framework/category_menu.dart';
+import 'package:iot_framework/device_menu.dart';
+import 'package:iot_framework/home_menu.dart';
+import 'package:iot_framework/info_page.dart';
 import 'package:iot_framework/trigger_menu.dart';
-// import 'package:iot_framework/trigger_menu.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);
@@ -13,10 +13,11 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
-  int currentPage = 0;
+  int currentPage = 2;
   List<Widget> pages = const [
-    HomePage(),
+    HomeMenuPage(),
     CategoryMenuPage(),
+    InfoPage(),
     TriggerMenuPage(),
     DeviceMenuPage()
   ];
@@ -62,6 +63,15 @@ class _RootPageState extends State<RootPage> {
                   ),
                   label: 'Category',
                   selectedIcon: Icon(Icons.category, color: Colors.white)),
+              NavigationDestination(
+                icon: Icon(
+                  Icons.info_outline_rounded,
+                  color: Colors.white,
+                ),
+                label: 'Info',
+                selectedIcon:
+                    Icon(Icons.info_outline_rounded, color: Colors.white),
+              ),
               NavigationDestination(
                 icon: Icon(
                   Icons.pending_actions_sharp,
