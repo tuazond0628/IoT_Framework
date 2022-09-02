@@ -1,6 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:iot_framework/models/appbar.dart';
 import 'package:iot_framework/models/count.dart';
-import 'package:iot_framework/routine_page.dart';
+import 'package:iot_framework/routine_mobile_page.dart';
+import 'package:iot_framework/routine_web_page.dart';
 
 class HomeMenuPage extends StatefulWidget {
   const HomeMenuPage({Key? key}) : super(key: key);
@@ -20,11 +23,6 @@ class _HomeMenuPageState extends State<HomeMenuPage> {
         orderby: 'Location',
         equalto: 'Backyard',
         image: 'images/backyard.png'),
-    Home(
-        location: 'Bathroom',
-        orderby: 'Location',
-        equalto: 'Bathroom',
-        image: 'images/bathroom.png'),
     Home(
         location: 'Bedroom',
         orderby: 'Location',
@@ -71,24 +69,24 @@ class _HomeMenuPageState extends State<HomeMenuPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF1D63A3),
-      appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          // shadowColor: const Color(0xFF1D63A3),
-          title: const Text('HOME LOCATION',
-              style: TextStyle(
-                fontFamily: 'Proxima',
-                fontSize: 27,
-                color: Colors.white,
-                shadows: [
-                  Shadow(
-                    blurRadius: 10.0,
-                    color: Colors.black87,
-                    offset: Offset(5.0, 5.0),
-                  ),
-                ],
-              ))),
+      appBar: (kIsWeb) // running on the web!
+          ? null
+          : BaseAppBar(
+              title: const Text('HOME',
+                  style: TextStyle(
+                    fontFamily: 'Proxima',
+                    fontSize: 27,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 10.0,
+                        color: Colors.black87,
+                        offset: Offset(5.0, 5.0),
+                      ),
+                    ],
+                  )),
+              appBar: AppBar(),
+            ),
       body: Container(
         alignment: Alignment.center,
         // padding: const EdgeInsets.all(32),
@@ -98,7 +96,8 @@ class _HomeMenuPageState extends State<HomeMenuPage> {
                   'images/blue.jpg',
                 ),
                 fit: BoxFit.cover)),
-        child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -123,71 +122,104 @@ class _HomeMenuPageState extends State<HomeMenuPage> {
                             splashColor: Colors.white.withOpacity(0.5),
                             borderRadius: BorderRadius.circular(18.0),
                             onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: ((context) => RoutinePage(
-                                            qorderBy: list[index].orderby,
-                                            qequalTo: list[index].equalto,
-                                          ))));
+                              if (kIsWeb) {
+                                // running on the web!
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) => RoutineWebPage(
+                                              qorderBy: list[index].orderby,
+                                              qequalTo: list[index].equalto,
+                                            ))));
+                              } else {
+                                // running on mobile (Android or iPhone)
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) =>
+                                            RoutineMobilePage(
+                                              qorderBy: list[index].orderby,
+                                              qequalTo: list[index].equalto,
+                                            ))));
+                              }
                             },
                             child: Card(
-                              color: Colors.pinkAccent,
-                              elevation: 30,
-                              child: ListTile(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0, vertical: 10.0),
-                                  leading: Container(
-                                    padding: const EdgeInsets.only(right: 12.0),
-                                    decoration: const BoxDecoration(
-                                        border: Border(
-                                            right: BorderSide(
-                                                width: 1.0,
-                                                color: Colors.white))),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: Material(
-                                        color: Colors.white,
-                                        child: Image.asset(
-                                          list[index].image,
-                                          width: 80,
-                                          height: 80,
-                                          // fit: BoxFit.cover,
+                              // color: Colors.pinkAccent,
+                              clipBehavior: Clip.antiAlias,
+                              elevation: 20,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Container(
+                                // height: 350,
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color.fromRGBO(173, 48, 152, 1),
+                                      Color.fromRGBO(197, 106, 182, 1),
+                                      Color.fromRGBO(229, 124, 194, 1),
+                                      Color.fromRGBO(242, 174, 228, 1),
+                                      Color.fromRGBO(245, 213, 248, 1),
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                ),
+                                child: ListTile(
+                                    contentPadding: const EdgeInsets.symmetric(
+                                        horizontal: 20.0, vertical: 10.0),
+                                    leading: Container(
+                                      padding:
+                                          const EdgeInsets.only(right: 12.0),
+                                      decoration: const BoxDecoration(
+                                          border: Border(
+                                              right: BorderSide(
+                                                  width: 1.0,
+                                                  color: Colors.white))),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: Material(
+                                          color: Colors.white,
+                                          child: Image.asset(
+                                            list[index].image,
+                                            width: 80,
+                                            height: 80,
+                                            // fit: BoxFit.cover,
+                                          ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  title: Text(
-                                    devices,
-                                    // textAlign: TextAlign.center,
-                                    style: const TextStyle(
-                                      fontFamily: 'Proxima',
-                                      color: Colors.white,
-                                      fontSize: 24,
-                                      shadows: [
-                                        Shadow(
-                                          blurRadius: 10.0,
-                                          color: Colors.black87,
-                                          offset: Offset(5.0, 5.0),
-                                        ),
+                                    title: Text(
+                                      devices,
+                                      // textAlign: TextAlign.center,
+                                      style: const TextStyle(
+                                        fontFamily: 'Proxima',
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        shadows: [
+                                          Shadow(
+                                            blurRadius: 10.0,
+                                            color: Colors.black87,
+                                            offset: Offset(5.0, 5.0),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
+
+                                    subtitle: Row(
+                                      children: <Widget>[
+                                        const SizedBox(height: 40),
+                                        CountRoutine(
+                                          qorderBy: list[index].orderby,
+                                          qequalTo: list[index].equalto,
+                                        )
                                       ],
                                     ),
-                                  ),
-                                  // subtitle: Text("Intermediate", style: TextStyle(color: Colors.white)),
-
-                                  subtitle: Row(
-                                    children: <Widget>[
-                                      const SizedBox(height: 40),
-                                      CountRoutine(
-                                        qorderBy: list[index].orderby,
-                                        qequalTo: list[index].equalto,
-                                      )
-                                    ],
-                                  ),
-                                  trailing: const Icon(
-                                      Icons.keyboard_arrow_right,
-                                      color: Colors.white,
-                                      size: 30.0)),
+                                    trailing: const Icon(
+                                        Icons.keyboard_arrow_right,
+                                        color: Colors.black87,
+                                        size: 30.0)),
+                              ),
                             ));
                       }),
                 ),

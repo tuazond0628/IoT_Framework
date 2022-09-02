@@ -2,25 +2,25 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:iot_framework/models/Routine.dart';
+import 'package:iot_framework/models/routine.dart';
 import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-class RoutinePage extends StatefulWidget {
+class RoutineMobilePage extends StatefulWidget {
   final String qorderBy;
   final String qequalTo;
 
-  const RoutinePage({
+  const RoutineMobilePage({
     Key? key,
     required this.qorderBy,
     required this.qequalTo,
   }) : super(key: key);
 
   @override
-  State<RoutinePage> createState() => _RoutinePageState();
+  State<RoutineMobilePage> createState() => _RoutineMobilePageState();
 }
 
-class _RoutinePageState extends State<RoutinePage>
+class _RoutineMobilePageState extends State<RoutineMobilePage>
     with SingleTickerProviderStateMixin {
   TextEditingController controller = TextEditingController();
   late AnimationController animationController;
@@ -37,8 +37,8 @@ class _RoutinePageState extends State<RoutinePage>
   @override
   void initState() {
     super.initState();
-    routineList = Routine(
-        0, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '');
+    routineList = Routine(0, '', '', '', '', '', '', '', '', '', '', '', '', '',
+        '', '', '', '', '');
     final FirebaseDatabase database = FirebaseDatabase.instance;
     firebaseRef = database.ref().child('Routine');
 
@@ -65,7 +65,7 @@ class _RoutinePageState extends State<RoutinePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.blue[700],
       appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
@@ -74,11 +74,11 @@ class _RoutinePageState extends State<RoutinePage>
               style: const TextStyle(
                 fontFamily: 'Proxima',
                 fontSize: 27,
-                color: Colors.black87,
+                color: Colors.white,
                 shadows: [
                   Shadow(
                     blurRadius: 10.0,
-                    color: Colors.white,
+                    color: Colors.black87,
                     offset: Offset(5.0, 5.0),
                   ),
                 ],
@@ -86,13 +86,13 @@ class _RoutinePageState extends State<RoutinePage>
       body: SafeArea(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
                   child: CupertinoSearchTextField(
                     backgroundColor: Colors.white,
                     placeholder: 'Search...',
@@ -136,7 +136,7 @@ class _RoutinePageState extends State<RoutinePage>
                               padding: const EdgeInsets.all(10.0),
                               child: Card(
                                 clipBehavior: Clip.antiAlias,
-                                elevation: 20,
+                                elevation: 30,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12)),
                                 child: ClipRRect(
@@ -156,8 +156,8 @@ class _RoutinePageState extends State<RoutinePage>
                                                 onTap: () {},
                                               )),
                                           Padding(
-                                            padding: const EdgeInsets.all(16)
-                                                .copyWith(top: 20.0),
+                                            padding: const EdgeInsets.all(15.0)
+                                                .copyWith(top: 0),
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
@@ -234,37 +234,26 @@ class _RoutinePageState extends State<RoutinePage>
                                             ),
                                           ),
                                           SizedBox(
-                                            height: 205,
+                                            height: 220,
                                             child: Align(
-                                              alignment: Alignment.bottomCenter,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(16)
-                                                        .copyWith(top: 0),
-                                                child: Text(
-                                                  routinesList[index]
-                                                      .description,
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontFamily: 'Proxima',
-                                                    fontSize: 20,
-                                                    height: 1.8,
-                                                    overflow:
-                                                        TextOverflow.visible,
-                                                    shadows: const [
-                                                      Shadow(
-                                                        blurRadius: 10.0,
-                                                        color: Colors.black87,
-                                                        offset:
-                                                            Offset(5.0, 5.0),
-                                                      ),
-                                                    ],
-                                                    background: Paint()
-                                                      ..strokeWidth = 18
-                                                      ..color = Colors.black38
-                                                      ..style =
-                                                          PaintingStyle.fill,
-                                                    color: Colors.white,
+                                              alignment: Alignment.bottomLeft,
+                                              child: Container(
+                                                height: 60,
+                                                alignment: Alignment.centerLeft,
+                                                color: Colors.black54,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(10.0)
+                                                          .copyWith(top: 0),
+                                                  child: Text(
+                                                    routinesList[index]
+                                                        .description,
+                                                    textAlign: TextAlign.center,
+                                                    style: const TextStyle(
+                                                      fontFamily: 'Proxima',
+                                                      fontSize: 18,
+                                                      color: Colors.white,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -316,93 +305,169 @@ class _RoutinePageState extends State<RoutinePage>
                                             children: [
                                               Align(
                                                 alignment: Alignment.bottomLeft,
-                                                child: Text(
-                                                  'Routine ID: ${routinesList[index].key}',
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Proxima',
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      height: 1.2,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                child: Text.rich(
+                                                  TextSpan(
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Proxima',
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        height: 1.3),
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: '',
+                                                      ),
+                                                      const WidgetSpan(
+                                                        child: Icon(
+                                                          Icons.star,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text:
+                                                            ' ${routinesList[index].devicetrigger}',
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                               Align(
                                                 alignment: Alignment.bottomLeft,
-                                                child: Text(
-                                                  'Device: ${routinesList[index].devicegroup}',
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Proxima',
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      height: 1.2,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                child: Text.rich(
+                                                  TextSpan(
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Proxima',
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        height: 1.3),
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: '',
+                                                      ),
+                                                      const WidgetSpan(
+                                                        child: Icon(
+                                                          Icons
+                                                              .wifi_protected_setup_sharp,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text:
+                                                            ' ${routinesList[index].triggergroup}',
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                               Align(
                                                 alignment: Alignment.bottomLeft,
-                                                child: Text(
-                                                  'Trigger: ${routinesList[index].triggergroup}',
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Proxima',
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      height: 1.2,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                child: Text.rich(
+                                                  TextSpan(
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Proxima',
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        height: 1.3),
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: '',
+                                                      ),
+                                                      const WidgetSpan(
+                                                        child: Icon(
+                                                          Icons
+                                                              .favorite_border_outlined,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text:
+                                                            ' ${routinesList[index].devicegroup}',
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                               Align(
                                                 alignment: Alignment.bottomLeft,
-                                                child: Text(
-                                                  'Action: ${routinesList[index].actiongroup}',
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Proxima',
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      height: 1.2,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                child: Text.rich(
+                                                  TextSpan(
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Proxima',
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        height: 1.3),
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: '',
+                                                      ),
+                                                      const WidgetSpan(
+                                                        child: Icon(
+                                                          Icons
+                                                              .notifications_active_rounded,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text:
+                                                            ' ${routinesList[index].actiongroup}',
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                               Align(
                                                 alignment: Alignment.bottomLeft,
-                                                child: Text(
-                                                  'Tags: ${routinesList[index].tags}',
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Proxima',
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      height: 1.2,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                child: Text.rich(
+                                                  TextSpan(
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Proxima',
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        height: 1.3),
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: '',
+                                                      ),
+                                                      const WidgetSpan(
+                                                        child: Icon(
+                                                          Icons
+                                                              .access_alarms_outlined,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text:
+                                                            ' ${routinesList[index].schedule}',
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                               Align(
                                                 alignment: Alignment.bottomLeft,
-                                                child: Text(
-                                                  'Schedule: ${routinesList[index].schedule}',
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Proxima',
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      height: 1.2,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ),
-                                              Align(
-                                                alignment: Alignment.bottomLeft,
-                                                child: Text(
-                                                  'Number of Action: ${routinesList[index].numberofaction}',
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Proxima',
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      height: 1.2,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                child: Text.rich(
+                                                  TextSpan(
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Proxima',
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        height: 1.3),
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: '',
+                                                      ),
+                                                      const WidgetSpan(
+                                                        child: Icon(
+                                                          Icons
+                                                              .category_rounded,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text:
+                                                            ' ${routinesList[index].category}',
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ],
@@ -441,8 +506,8 @@ class _RoutinePageState extends State<RoutinePage>
                                                 onTap: () {},
                                               )),
                                           Padding(
-                                            padding: const EdgeInsets.all(16)
-                                                .copyWith(top: 20.0),
+                                            padding: const EdgeInsets.all(15.0)
+                                                .copyWith(top: 0),
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment
@@ -519,37 +584,26 @@ class _RoutinePageState extends State<RoutinePage>
                                             ),
                                           ),
                                           SizedBox(
-                                            height: 205,
+                                            height: 220,
                                             child: Align(
-                                              alignment: Alignment.bottomCenter,
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.all(16)
-                                                        .copyWith(top: 0),
-                                                child: Text(
-                                                  routinesList[index]
-                                                      .description,
-                                                  textAlign: TextAlign.center,
-                                                  style: TextStyle(
-                                                    fontFamily: 'Proxima',
-                                                    fontSize: 20,
-                                                    height: 1.8,
-                                                    overflow:
-                                                        TextOverflow.visible,
-                                                    shadows: const [
-                                                      Shadow(
-                                                        blurRadius: 10.0,
-                                                        color: Colors.black87,
-                                                        offset:
-                                                            Offset(5.0, 5.0),
-                                                      ),
-                                                    ],
-                                                    background: Paint()
-                                                      ..strokeWidth = 18
-                                                      ..color = Colors.black38
-                                                      ..style =
-                                                          PaintingStyle.fill,
-                                                    color: Colors.white,
+                                              alignment: Alignment.bottomLeft,
+                                              child: Container(
+                                                height: 60,
+                                                alignment: Alignment.centerLeft,
+                                                color: Colors.black54,
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(10.0)
+                                                          .copyWith(top: 0),
+                                                  child: Text(
+                                                    routinesList[index]
+                                                        .description,
+                                                    textAlign: TextAlign.center,
+                                                    style: const TextStyle(
+                                                      fontFamily: 'Proxima',
+                                                      fontSize: 18,
+                                                      color: Colors.white,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -601,93 +655,169 @@ class _RoutinePageState extends State<RoutinePage>
                                             children: [
                                               Align(
                                                 alignment: Alignment.bottomLeft,
-                                                child: Text(
-                                                  'Routine ID: ${routinesList[index].key}',
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Proxima',
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      height: 1.2,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                child: Text.rich(
+                                                  TextSpan(
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Proxima',
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        height: 1.3),
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: '',
+                                                      ),
+                                                      const WidgetSpan(
+                                                        child: Icon(
+                                                          Icons.star,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text:
+                                                            ' ${routinesList[index].devicetrigger}',
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                               Align(
                                                 alignment: Alignment.bottomLeft,
-                                                child: Text(
-                                                  'Device: ${routinesList[index].devicegroup}',
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Proxima',
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      height: 1.2,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                child: Text.rich(
+                                                  TextSpan(
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Proxima',
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        height: 1.3),
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: '',
+                                                      ),
+                                                      const WidgetSpan(
+                                                        child: Icon(
+                                                          Icons
+                                                              .wifi_protected_setup_sharp,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text:
+                                                            ' ${routinesList[index].triggergroup}',
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                               Align(
                                                 alignment: Alignment.bottomLeft,
-                                                child: Text(
-                                                  'Trigger: ${routinesList[index].triggergroup}',
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Proxima',
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      height: 1.2,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                child: Text.rich(
+                                                  TextSpan(
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Proxima',
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        height: 1.3),
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: '',
+                                                      ),
+                                                      const WidgetSpan(
+                                                        child: Icon(
+                                                          Icons
+                                                              .favorite_border_outlined,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text:
+                                                            ' ${routinesList[index].devicegroup}',
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                               Align(
                                                 alignment: Alignment.bottomLeft,
-                                                child: Text(
-                                                  'Action: ${routinesList[index].actiongroup}',
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Proxima',
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      height: 1.2,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                child: Text.rich(
+                                                  TextSpan(
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Proxima',
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        height: 1.3),
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: '',
+                                                      ),
+                                                      const WidgetSpan(
+                                                        child: Icon(
+                                                          Icons
+                                                              .notifications_active_rounded,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text:
+                                                            ' ${routinesList[index].actiongroup}',
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                               Align(
                                                 alignment: Alignment.bottomLeft,
-                                                child: Text(
-                                                  'Tags: ${routinesList[index].tags}',
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Proxima',
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      height: 1.2,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                child: Text.rich(
+                                                  TextSpan(
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Proxima',
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        height: 1.3),
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: '',
+                                                      ),
+                                                      const WidgetSpan(
+                                                        child: Icon(
+                                                          Icons
+                                                              .access_alarms_outlined,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text:
+                                                            ' ${routinesList[index].schedule}',
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                               Align(
                                                 alignment: Alignment.bottomLeft,
-                                                child: Text(
-                                                  'Schedule: ${routinesList[index].schedule}',
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Proxima',
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      height: 1.2,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                ),
-                                              ),
-                                              Align(
-                                                alignment: Alignment.bottomLeft,
-                                                child: Text(
-                                                  'Number of Action: ${routinesList[index].numberofaction}',
-                                                  style: const TextStyle(
-                                                      fontFamily: 'Proxima',
-                                                      color: Colors.white,
-                                                      fontSize: 16,
-                                                      height: 1.2,
-                                                      fontWeight:
-                                                          FontWeight.bold),
+                                                child: Text.rich(
+                                                  TextSpan(
+                                                    style: const TextStyle(
+                                                        fontFamily: 'Proxima',
+                                                        color: Colors.white,
+                                                        fontSize: 16,
+                                                        height: 1.3),
+                                                    children: [
+                                                      const TextSpan(
+                                                        text: '',
+                                                      ),
+                                                      const WidgetSpan(
+                                                        child: Icon(
+                                                          Icons
+                                                              .category_rounded,
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                      TextSpan(
+                                                        text:
+                                                            ' ${routinesList[index].category}',
+                                                      )
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ],
@@ -761,13 +891,23 @@ class _RoutinePageState extends State<RoutinePage>
             Lottie.asset(
               'images/lottie/success.json',
             ),
-            const Center(
-              child: Text(
-                'Done!',
-                style: TextStyle(
-                    color: Colors.green,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold),
+            Center(
+              child: GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: Text(
+                  'Done!',
+                  style: TextStyle(
+                    fontFamily: 'Proxima',
+                    fontSize: 20,
+                    background: Paint()
+                      ..strokeWidth = 20
+                      ..color = Colors.green
+                      ..strokeJoin = StrokeJoin.round
+                      ..strokeCap = StrokeCap.round
+                      ..style = PaintingStyle.stroke,
+                    color: Colors.white,
+                  ),
+                ),
               ),
             ),
             const SizedBox(height: 21)

@@ -1,7 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-class InfoPage extends StatelessWidget {
-  const InfoPage({Key? key}) : super(key: key);
+class InfoWebPage extends StatelessWidget {
+  const InfoWebPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -10,16 +11,21 @@ class InfoPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              height: 20,
+            const Padding(
+              padding: EdgeInsets.all(50.0),
+              child: SizedBox(
+                height: 20,
+              ),
             ),
             Align(
               alignment: FractionalOffset.topCenter,
-              child: Image.asset(
-                'images/logo.png',
-                height: 220,
-                width: 220,
-              ),
+              child: (kIsWeb) // running on the web!
+                  ? null
+                  : Image.asset(
+                      'images/logo.png',
+                      height: 220,
+                      width: 220,
+                    ),
             ),
             const Align(
               alignment: FractionalOffset.topCenter,
@@ -29,6 +35,28 @@ class InfoPage extends StatelessWidget {
                   fontFamily: 'Proxima',
                   color: Colors.white,
                   fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  shadows: [
+                    Shadow(
+                      blurRadius: 10.0,
+                      color: Colors.black87,
+                      offset: Offset(5.0, 5.0),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            const Align(
+              alignment: FractionalOffset.topCenter,
+              child: Text(
+                '" Bringing IoT Devices to Life "',
+                style: TextStyle(
+                  fontFamily: 'Proxima',
+                  color: Colors.white,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                   shadows: [
                     Shadow(
@@ -86,27 +114,3 @@ class InfoPage extends StatelessWidget {
     );
   }
 }
-
-// import 'category_page.dart';
-
-// class  xc m  extends StatelessWidget {
-//   const InfoPage({Key? key}) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: ElevatedButton(
-//         onPressed: () {
-//           Navigator.of(context).push(
-//             MaterialPageRoute(
-//               builder: (BuildContext context) {
-//                 return const CategoryPage();
-//               },
-//             ),
-//           );
-//         },
-//         child: const Text('HOME PAGE'),
-//       ),
-//     );
-//   }
-// }

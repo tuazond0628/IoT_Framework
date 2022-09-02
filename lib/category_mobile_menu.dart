@@ -1,15 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:iot_framework/models/appbar.dart';
 import 'package:iot_framework/models/count.dart';
-import 'package:iot_framework/routine_page.dart';
+import 'package:iot_framework/routine_mobile_page.dart';
+import 'package:iot_framework/routine_web_page.dart';
 
-class CategoryMenuPage extends StatefulWidget {
-  const CategoryMenuPage({Key? key}) : super(key: key);
+class CategoryMobileMenuPage extends StatefulWidget {
+  const CategoryMobileMenuPage({Key? key}) : super(key: key);
 
   @override
-  State<CategoryMenuPage> createState() => _CategoryMenuPageState();
+  State<CategoryMobileMenuPage> createState() => _CategoryMobileMenuPageState();
 }
 
-class _CategoryMenuPageState extends State<CategoryMenuPage> {
+class _CategoryMobileMenuPageState extends State<CategoryMobileMenuPage> {
   TextEditingController controller = TextEditingController();
 
   String txt = '';
@@ -21,9 +24,9 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
         equalto: 'Home Security',
         image: 'images/categories/homesecurity.jpg'),
     Category(
-        category: 'Personal \nAssistance',
+        category: 'Voice Assistance',
         orderby: 'Category',
-        equalto: 'Personal Assistance',
+        equalto: 'Voice Assistance',
         image: 'images/categories/personalassistance.jpg'),
     Category(
         category: 'Convenience',
@@ -49,50 +52,36 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
 
   @override
   Widget build(BuildContext context) {
+    // var size = MediaQuery.of(context).size;
+
+    /*24 is for notification bar on Android*/
+    // final double itemHeight = (size.height - kToolbarHeight - 24) / 10;
+    // final double itemWidth = size.width / 10;
     return Scaffold(
+        appBar: BaseAppBar(
+          title: const Text('PREFERENCE',
+              style: TextStyle(
+                fontFamily: 'Proxima',
+                fontSize: 27,
+                color: Colors.white,
+                shadows: [
+                  Shadow(
+                    blurRadius: 10.0,
+                    color: Colors.black87,
+                    offset: Offset(5.0, 5.0),
+                  ),
+                ],
+              )),
+          appBar: AppBar(),
+        ),
         backgroundColor: const Color(0xFF1D63A3),
-        appBar: AppBar(
-            centerTitle: true,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            // shadowColor: const Color(0xFF1D63A3),
-            title: const Text('HOME LOCATION',
-                style: TextStyle(
-                  fontFamily: 'Proxima',
-                  fontSize: 27,
-                  color: Colors.white,
-                  shadows: [
-                    Shadow(
-                      blurRadius: 10.0,
-                      color: Colors.black87,
-                      offset: Offset(5.0, 5.0),
-                    ),
-                  ],
-                ))),
         body: Container(
-          // padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-          // margin: const EdgeInsets.only(
-          //     left: 5.0, right: 5.0, top: 10.0, bottom: 10.0),
-          // decoration: BoxDecoration(
-          //   border: Border.all(color: const Color(0xFF282f61), width: 2.0),
-          //   borderRadius: const BorderRadius.all(
-          //       Radius.circular(10.0) //                 <--- border radius here
-          //       ),
-          // ),
-          //     decoration: const BoxDecoration(
-          //   color: Colors.blue,
-          //   borderRadius: BorderRadius.all(
-          //     Radius.circular(10)
-          //   )
-          // ),
           alignment: Alignment.center,
           // color: Colors.pinkAccent,
-
-          // padding: const EdgeInsets.all(32),
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(
-                    'images/blue.jpg',
+                    'images/pink.jpg',
                   ),
                   fit: BoxFit.cover)),
           child: GridView.builder(
@@ -104,18 +93,33 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
                   splashColor: Colors.white.withOpacity(0.5),
                   borderRadius: BorderRadius.circular(18.0),
                   onTap: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: ((context) => RoutinePage(
-                                  qorderBy: list[index].orderby,
-                                  qequalTo: list[index].equalto,
-                                ))));
+                    if (kIsWeb) {
+                      // running on the web!
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => RoutineWebPage(
+                                    qorderBy: list[index].orderby,
+                                    qequalTo: list[index].equalto,
+                                  ))));
+                    } else {
+                      // running on mobile (Android or iPhone)
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => RoutineMobilePage(
+                                    qorderBy: list[index].orderby,
+                                    qequalTo: list[index].equalto,
+                                  ))));
+                    }
                   },
                   child: GridTile(
-                    header: CountRoutine(
-                      qorderBy: list[index].orderby,
-                      qequalTo: list[index].equalto,
+                    header: Container(
+                      alignment: Alignment.center,
+                      child: CountRoutine(
+                        qorderBy: list[index].orderby,
+                        qequalTo: list[index].equalto,
+                      ),
                     ),
                     footer: Container(
                       height: 60,
@@ -144,9 +148,10 @@ class _CategoryMenuPageState extends State<CategoryMenuPage> {
               );
             },
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 25.0,
-                crossAxisSpacing: 10.0),
+              crossAxisCount: 2,
+              mainAxisSpacing: 25.0,
+              crossAxisSpacing: 10.0,
+            ),
             padding: const EdgeInsets.all(10),
             shrinkWrap: true,
           ),

@@ -4,6 +4,7 @@ class Routine {
   int key;
   String routinename;
   String tags;
+  String category;
   String description;
   String images;
   String triggername;
@@ -24,6 +25,7 @@ class Routine {
       this.key,
       this.routinename,
       this.tags,
+      this.category,
       this.description,
       this.images,
       this.triggername,
@@ -44,6 +46,7 @@ class Routine {
       : key = (snapshot.value as dynamic)['Routine_Key'],
         routinename = (snapshot.value as dynamic)['Routine_Name'],
         tags = (snapshot.value as dynamic)['Categories Tags'],
+        category = (snapshot.value as dynamic)['Category'],
         description = (snapshot.value as dynamic)['Routine_Description'],
         images = (snapshot.value as dynamic)['Images'],
         triggername = (snapshot.value as dynamic)['Trigger_Name'],
@@ -65,6 +68,7 @@ class Routine {
       'Routine Key': key,
       'Routine_Name': routinename,
       'Categories Tags': tags,
+      'Category': category,
       'Routine_Description': description,
       'Images': images,
       'Trigger_Name': triggername,

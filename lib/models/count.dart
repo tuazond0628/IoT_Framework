@@ -34,6 +34,11 @@ class _CountRoutineState extends State<CountRoutine> {
   List<Map<dynamic, dynamic>> lists = [];
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder<DatabaseEvent>(
         future: getData(),
@@ -70,7 +75,12 @@ class _CountRoutineState extends State<CountRoutine> {
               ),
             );
           }
-          return const CircularProgressIndicator();
+          return Container();
         });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
