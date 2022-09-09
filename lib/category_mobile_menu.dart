@@ -59,10 +59,10 @@ class _CategoryMobileMenuPageState extends State<CategoryMobileMenuPage> {
     // final double itemWidth = size.width / 10;
     return Scaffold(
         appBar: BaseAppBar(
-          title: const Text('PREFERENCE',
+          title: const Text('Preference',
               style: TextStyle(
                 fontFamily: 'Proxima',
-                fontSize: 27,
+                fontSize: 28,
                 color: Colors.white,
                 shadows: [
                   Shadow(

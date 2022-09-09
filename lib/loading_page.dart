@@ -53,7 +53,7 @@ class LoadingPage extends StatelessWidget {
           backgroundColor: const Color(0xFF1D63A3),
           nextScreen: (kIsWeb)
               ? const NavigationBarWebPage()
-              : const NavigatioBarMobilePage(),
+              : const NavigationBarMobilePage(),
         ),
       ),
     );

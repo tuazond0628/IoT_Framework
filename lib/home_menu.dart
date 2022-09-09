@@ -72,10 +72,10 @@ class _HomeMenuPageState extends State<HomeMenuPage> {
       appBar: (kIsWeb) // running on the web!
           ? null
           : BaseAppBar(
-              title: const Text('HOME',
+              title: const Text('Home',
                   style: TextStyle(
                     fontFamily: 'Proxima',
-                    fontSize: 27,
+                    fontSize: 28,
                     color: Colors.white,
                     shadows: [
                       Shadow(

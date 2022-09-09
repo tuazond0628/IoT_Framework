@@ -1,7 +1,9 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iot_framework/models/appbar.dart';
 import 'package:iot_framework/models/routine.dart';
 import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -65,24 +67,23 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue[700],
-      appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          centerTitle: true,
-          title: Text('${widget.qequalTo} Routines',
-              style: const TextStyle(
-                fontFamily: 'Proxima',
-                fontSize: 27,
-                color: Colors.white,
-                shadows: [
-                  Shadow(
-                    blurRadius: 10.0,
-                    color: Colors.black87,
-                    offset: Offset(5.0, 5.0),
-                  ),
-                ],
-              ))),
+      backgroundColor: const Color(0xFF67A3D9),
+      appBar: BaseAppBar(
+        title: Text('${widget.qequalTo} Routines',
+            style: const TextStyle(
+              fontFamily: 'Proxima',
+              fontSize: 24,
+              color: Colors.white,
+              shadows: [
+                Shadow(
+                  blurRadius: 10.0,
+                  color: Colors.black87,
+                  offset: Offset(5.0, 5.0),
+                ),
+              ],
+            )),
+        appBar: AppBar(),
+      ),
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -278,14 +279,14 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
                                                         'Single'
                                                     ? Colors.pinkAccent
                                                     : const Color(0xFF1D63A3),
-                                            subtitle: const Text(
-                                              'Click here for more details.',
+                                            subtitle: Text(
+                                              routinesList[index].routinename,
                                               textAlign: TextAlign.left,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontFamily: 'Proxima',
-                                                fontSize: 13,
+                                                fontSize: 16,
                                                 height: 1.2,
-                                                fontWeight: FontWeight.bold,
+                                                // fontWeight: FontWeight.bold,
                                                 overflow: TextOverflow.visible,
                                                 color: Colors.white,
                                               ),
@@ -293,14 +294,20 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
                                             childrenPadding:
                                                 const EdgeInsets.all(16)
                                                     .copyWith(top: 0),
-                                            title: Text(
-                                              routinesList[index].routinename,
+                                            title: const Text(
+                                              'Click here to learn more.',
                                               textAlign: TextAlign.left,
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                   fontFamily: 'Proxima',
                                                   color: Colors.white,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold),
+                                                  shadows: [
+                                                    Shadow(
+                                                      blurRadius: 10.0,
+                                                      color: Colors.black87,
+                                                      offset: Offset(5.0, 5.0),
+                                                    ),
+                                                  ],
+                                                  fontSize: 18),
                                             ),
                                             children: [
                                               Align(
@@ -324,7 +331,7 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
                                                       ),
                                                       TextSpan(
                                                         text:
-                                                            ' ${routinesList[index].devicetrigger}',
+                                                            'Trigger by: ${routinesList[index].devicetrigger}',
                                                       )
                                                     ],
                                                   ),
@@ -352,7 +359,7 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
                                                       ),
                                                       TextSpan(
                                                         text:
-                                                            ' ${routinesList[index].triggergroup}',
+                                                            'Initiated by: ${routinesList[index].triggergroup}',
                                                       )
                                                     ],
                                                   ),
@@ -379,8 +386,12 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
                                                         ),
                                                       ),
                                                       TextSpan(
-                                                        text:
-                                                            ' ${routinesList[index].devicegroup}',
+                                                        text: routinesList[
+                                                                        index]
+                                                                    .numberofaction ==
+                                                                'Single'
+                                                            ? 'Devices: ${routinesList[index].devicegroup}'
+                                                            : 'Devices: \n${routinesList[index].devicegroup}',
                                                       )
                                                     ],
                                                   ),
@@ -407,8 +418,12 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
                                                         ),
                                                       ),
                                                       TextSpan(
-                                                        text:
-                                                            ' ${routinesList[index].actiongroup}',
+                                                        text: routinesList[
+                                                                        index]
+                                                                    .numberofaction ==
+                                                                'Single'
+                                                            ? 'Actions: ${routinesList[index].actiongroup}'
+                                                            : 'Actions: \n${routinesList[index].actiongroup}',
                                                       )
                                                     ],
                                                   ),
@@ -435,36 +450,12 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
                                                         ),
                                                       ),
                                                       TextSpan(
-                                                        text:
-                                                            ' ${routinesList[index].schedule}',
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              Align(
-                                                alignment: Alignment.bottomLeft,
-                                                child: Text.rich(
-                                                  TextSpan(
-                                                    style: const TextStyle(
-                                                        fontFamily: 'Proxima',
-                                                        color: Colors.white,
-                                                        fontSize: 16,
-                                                        height: 1.3),
-                                                    children: [
-                                                      const TextSpan(
-                                                        text: '',
-                                                      ),
-                                                      const WidgetSpan(
-                                                        child: Icon(
-                                                          Icons
-                                                              .category_rounded,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                      TextSpan(
-                                                        text:
-                                                            ' ${routinesList[index].category}',
+                                                        text: routinesList[
+                                                                        index]
+                                                                    .numberofaction ==
+                                                                'Single'
+                                                            ? 'Active Days: ${routinesList[index].schedule}'
+                                                            : 'Active Days: \n${routinesList[index].schedule}',
                                                       )
                                                     ],
                                                   ),
@@ -486,7 +477,7 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
                               padding: const EdgeInsets.all(10.0),
                               child: Card(
                                 clipBehavior: Clip.antiAlias,
-                                elevation: 20,
+                                elevation: 30,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12)),
                                 child: ClipRRect(
@@ -628,14 +619,14 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
                                                         'Single'
                                                     ? Colors.pinkAccent
                                                     : const Color(0xFF1D63A3),
-                                            subtitle: const Text(
-                                              'Click here for more details.',
+                                            subtitle: Text(
+                                              routinesList[index].routinename,
                                               textAlign: TextAlign.left,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontFamily: 'Proxima',
-                                                fontSize: 13,
+                                                fontSize: 16,
                                                 height: 1.2,
-                                                fontWeight: FontWeight.bold,
+                                                // fontWeight: FontWeight.bold,
                                                 overflow: TextOverflow.visible,
                                                 color: Colors.white,
                                               ),
@@ -643,14 +634,20 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
                                             childrenPadding:
                                                 const EdgeInsets.all(16)
                                                     .copyWith(top: 0),
-                                            title: Text(
-                                              routinesList[index].routinename,
+                                            title: const Text(
+                                              'Click here to learn more.',
                                               textAlign: TextAlign.left,
-                                              style: const TextStyle(
+                                              style: TextStyle(
                                                   fontFamily: 'Proxima',
                                                   color: Colors.white,
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.bold),
+                                                  shadows: [
+                                                    Shadow(
+                                                      blurRadius: 10.0,
+                                                      color: Colors.black87,
+                                                      offset: Offset(5.0, 5.0),
+                                                    ),
+                                                  ],
+                                                  fontSize: 18),
                                             ),
                                             children: [
                                               Align(
@@ -674,7 +671,7 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
                                                       ),
                                                       TextSpan(
                                                         text:
-                                                            ' ${routinesList[index].devicetrigger}',
+                                                            'Trigger by: ${routinesList[index].devicetrigger}',
                                                       )
                                                     ],
                                                   ),
@@ -702,7 +699,7 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
                                                       ),
                                                       TextSpan(
                                                         text:
-                                                            ' ${routinesList[index].triggergroup}',
+                                                            'Initiated by: ${routinesList[index].triggergroup}',
                                                       )
                                                     ],
                                                   ),
@@ -729,8 +726,12 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
                                                         ),
                                                       ),
                                                       TextSpan(
-                                                        text:
-                                                            ' ${routinesList[index].devicegroup}',
+                                                        text: routinesList[
+                                                                        index]
+                                                                    .numberofaction ==
+                                                                'Single'
+                                                            ? 'Devices: ${routinesList[index].devicegroup}'
+                                                            : 'Devices: \n${routinesList[index].devicegroup}',
                                                       )
                                                     ],
                                                   ),
@@ -757,8 +758,12 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
                                                         ),
                                                       ),
                                                       TextSpan(
-                                                        text:
-                                                            ' ${routinesList[index].actiongroup}',
+                                                        text: routinesList[
+                                                                        index]
+                                                                    .numberofaction ==
+                                                                'Single'
+                                                            ? 'Actions: ${routinesList[index].actiongroup}'
+                                                            : 'Actions: \n${routinesList[index].actiongroup}',
                                                       )
                                                     ],
                                                   ),
@@ -785,36 +790,12 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
                                                         ),
                                                       ),
                                                       TextSpan(
-                                                        text:
-                                                            ' ${routinesList[index].schedule}',
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                              Align(
-                                                alignment: Alignment.bottomLeft,
-                                                child: Text.rich(
-                                                  TextSpan(
-                                                    style: const TextStyle(
-                                                        fontFamily: 'Proxima',
-                                                        color: Colors.white,
-                                                        fontSize: 16,
-                                                        height: 1.3),
-                                                    children: [
-                                                      const TextSpan(
-                                                        text: '',
-                                                      ),
-                                                      const WidgetSpan(
-                                                        child: Icon(
-                                                          Icons
-                                                              .category_rounded,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                      TextSpan(
-                                                        text:
-                                                            ' ${routinesList[index].category}',
+                                                        text: routinesList[
+                                                                        index]
+                                                                    .numberofaction ==
+                                                                'Single'
+                                                            ? 'Active Days: ${routinesList[index].schedule}'
+                                                            : 'Active Days: \n${routinesList[index].schedule}',
                                                       )
                                                     ],
                                                   ),
@@ -884,34 +865,40 @@ class _RoutineMobilePageState extends State<RoutineMobilePage>
             const SizedBox(height: 21)
           ])));
 
-  void showSuccessfulDialog() => showDialog(
-      context: context,
-      builder: (context) => Dialog(
-              child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Lottie.asset(
-              'images/lottie/success.json',
-            ),
-            Center(
-              child: GestureDetector(
-                onTap: () => Navigator.pop(context),
-                child: Text(
-                  'Done!',
-                  style: TextStyle(
-                    fontFamily: 'Proxima',
-                    fontSize: 20,
-                    background: Paint()
-                      ..strokeWidth = 20
-                      ..color = Colors.green
-                      ..strokeJoin = StrokeJoin.round
-                      ..strokeCap = StrokeCap.round
-                      ..style = PaintingStyle.stroke,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 21)
-          ])));
+  void showSuccessfulDialog() => AwesomeDialog(
+        context: context,
+        dialogType: DialogType.SUCCES,
+        borderSide: const BorderSide(
+          color: Color(0xFF018DB2),
+          width: 2,
+        ),
+        width: 350,
+        buttonsBorderRadius: const BorderRadius.all(
+          Radius.circular(2),
+        ),
+        dismissOnTouchOutside: false,
+        dismissOnBackKeyPress: false,
+        headerAnimationLoop: false,
+        animType: AnimType.BOTTOMSLIDE,
+        title: 'Done!',
+        titleTextStyle: const TextStyle(
+          fontFamily: 'Proxima',
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
+        ),
+        desc: 'Click ok to continue.',
+        descTextStyle: const TextStyle(
+          fontFamily: 'Proxima',
+          fontSize: 16,
+        ),
+        btnOkColor: Colors.pinkAccent,
+        buttonsTextStyle: const TextStyle(
+          fontFamily: 'Proxima',
+          color: Colors.white,
+          fontSize: 20,
+        ),
+        btnOkOnPress: () {},
+      ).show();
 
   void hyperlink() async {
     await launchUrlString(link, mode: LaunchMode.externalApplication);

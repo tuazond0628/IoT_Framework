@@ -3,9 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:iot_framework/loading_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'onboarding_page.dart';
+
+bool show = true;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  show = prefs.getBool('ON_BOARDING') ?? true;
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   if (kIsWeb) {
@@ -37,10 +44,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
+      // title: 'IoT Automation Framework',
       // themeMode: ThemeMode.light,
       // theme: FlexColorScheme.light(scheme: FlexScheme.espresso).toTheme,
       // darkTheme: FlexColorScheme.light(scheme: FlexScheme.espresso).toTheme,
-      home: const LoadingPage(),
+      home: show ? OnBoardingPage() : const LoadingPage(),
     );
   }
 }

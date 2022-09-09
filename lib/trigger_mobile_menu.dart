@@ -68,10 +68,10 @@ class _TriggerMobileMenuPageState extends State<TriggerMobileMenuPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: BaseAppBar(
-        title: const Text('TRIGGERS',
+        title: const Text('Triggers',
             style: TextStyle(
               fontFamily: 'Proxima',
-              fontSize: 27,
+              fontSize: 28,
               color: Colors.white,
               shadows: [
                 Shadow(

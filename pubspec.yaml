@@ -38,13 +38,10 @@ dependencies:
    # Use firebase widget
   firebase_core: ^1.20.0
   firebase_auth: ^3.6.2
-  firebase_database: ^9.1.0
+  firebase_database: ^9.1.3
 
   # User Lottie for Flutter
   lottie: ^1.4.1
-
-  # Use Color Scheme
-  flex_color_scheme: ^5.1.0
 
   # Use link Widget
   url_launcher: ^6.1.5
@@ -64,6 +61,30 @@ dependencies:
   # Use flutter speed dial
   flutter_speed_dial: ^6.0.0
 
+  # Use connectivity plus
+  connectivity_plus: ^2.3.6+1
+
+  # Use internet connection checker
+  internet_connection_checker: ^0.0.1+4
+
+  #User cross connectivity
+  cross_connectivity: ^3.0.5
+
+  # Use awesome dialog
+  awesome_dialog: ^2.2.1
+
+  # Use introduction screen
+  introduction_screen: ^3.0.2
+
+  # User shared preferences
+  shared_preferences: ^2.0.15
+
+  # Use neon widgets
+  neon_widgets: ^0.1.2
+
+  # Use flutter animated button
+  flutter_animated_button: ^2.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -72,19 +93,34 @@ dev_dependencies:
   flutter_native_splash: ^2.2.7
 
   # Flutter Launcher Icons
-  flutter_launcher_icons: ^0.9.3
+  flutter_launcher_icons: ^0.10.0
+  flutter_lints: ^2.0.1
+
+flutter_icons:
+  android: launcher_icon
+  ios: true
+  image_path: images/ourlogo.png
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  web:
+    generate: true
+    image_path: images/ourlogo.png
+    # background_color: #hexcode
+    # theme_color: "#hexcode"
+  windows:
+    generate: true
+    image_path: images/ourlogo.png
+    icon_size: 48 # min:48, max:256, default: 48
+
+  # adaptive_icon_background: "#ffffff"
+  # adaptive_icon_foreground: images/ourlogo.png
+
   flutter_lints: ^2.0.1
 
 flutter_native_splash:
   color: "#1D63A3"
   image: images/splash.png
 
-flutter_icons:
-  android: true
-  ios: true
-  image_path: images/iconlogo.png
-  adaptive_icon_background: "#ffffff"
-  adaptive_icon_foreground: images/iconlogo.png
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

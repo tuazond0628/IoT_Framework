@@ -129,7 +129,7 @@ class _DeviceWebMenuPageState extends State<DeviceWebMenuPage> {
                                 decoration: const BoxDecoration(
                                   gradient: LinearGradient(
                                     colors: [
-                                      Color.fromRGBO(173, 48, 152, 1),
+                                      // Color.fromRGBO(173, 48, 152, 1),
                                       Color.fromRGBO(197, 106, 182, 1),
                                       Color.fromRGBO(229, 124, 194, 1),
                                       Color.fromRGBO(242, 174, 228, 1),

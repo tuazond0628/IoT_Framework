@@ -1,10 +1,11 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:iot_framework/category_web_menu.dart';
 import 'package:iot_framework/device_web_menu..dart';
+import 'package:iot_framework/faq_page.dart';
 import 'package:iot_framework/home_menu.dart';
 import 'package:iot_framework/info_web_page.dart';
+import 'package:iot_framework/onboarding_web_page.dart';
 import 'package:iot_framework/routine_web_page.dart';
 import 'package:iot_framework/trigger_web_menu.dart';
 
@@ -25,32 +26,6 @@ class _NavigationBarWebPageState extends State<NavigationBarWebPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: SpeedDial(
-        backgroundColor: const Color(0xFF1D63A3),
-        animatedIcon: AnimatedIcons.menu_close,
-        children: [
-          SpeedDialChild(
-              child: const Icon(
-                Icons.recommend,
-                color: Colors.white,
-              ),
-              label: 'Recommended',
-              backgroundColor: const Color(0xFF1D63A3),
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const RoutineWebPage(
-                        qorderBy: 'Recommended',
-                        qequalTo: 'Recommended',
-                      )))),
-          // SpeedDialChild(
-          //     child: const Icon(
-          //       Icons.exit_to_app,
-          //       color: Colors.white,
-          //     ),
-          //     label: 'Exit App',
-          //     backgroundColor: const Color(0xFF1D63A3),
-          //     onTap: () => Navigator.of(context).pop())
-        ],
-      ),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -61,20 +36,49 @@ class _NavigationBarWebPageState extends State<NavigationBarWebPage> {
             },
             style: SideMenuStyle(
               displayMode: SideMenuDisplayMode.auto,
-              hoverColor: Colors.blue[100],
+              hoverColor: Colors.white,
               selectedColor: Colors.lightBlue,
-              selectedTitleTextStyle: const TextStyle(color: Colors.white),
+              selectedTitleTextStyle: const TextStyle(
+                fontFamily: 'Proxima',
+                fontSize: 15,
+                color: Colors.white,
+                shadows: [
+                  Shadow(
+                    blurRadius: 10.0,
+                    color: Colors.black87,
+                    offset: Offset(5.0, 5.0),
+                  ),
+                ],
+              ),
               selectedIconColor: Colors.white,
+              unselectedIconColor: Colors.black87,
+              unselectedTitleTextStyle: const TextStyle(
+                fontFamily: 'Proxima',
+                fontSize: 15,
+                color: Colors.black87,
+                shadows: [
+                  Shadow(
+                    blurRadius: 10.0,
+                    color: Colors.white,
+                    offset: Offset(5.0, 5.0),
+                  ),
+                ],
+              ),
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
+                    // Color.fromRGBO(173, 48, 152, 1),
+                    // Color.fromRGBO(197, 106, 182, 1),
+                    Color.fromRGBO(229, 124, 194, 1),
+                    Color.fromRGBO(242, 174, 228, 1),
+                    Color.fromRGBO(245, 213, 248, 1),
                     Color(0xFFF8B7CD),
-                    Color(0xFFF6D2E0),
-                    Color(0xFFC8E7F5),
+                    // Color(0xFFF6D2E0),
+                    // Color(0xFFC8E7F5),
                     Color(0xFF67A3D9),
                     Color(0xFF0671B7),
                     Color(0xFF1D63A3),
-                    Color(0xFF013169),
+                    // Color(0xFF013169),
                   ],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
@@ -168,17 +172,47 @@ class _NavigationBarWebPageState extends State<NavigationBarWebPage> {
                 },
                 icon: const Icon(Icons.home_work_outlined),
               ),
+              SideMenuItem(
+                priority: 5,
+                title: 'Get Started',
+                onTap: () {
+                  page.jumpToPage(5);
+                },
+                icon: const Icon(Icons.question_answer_rounded),
+              ),
+              SideMenuItem(
+                priority: 6,
+                title: 'Featured',
+                onTap: () {
+                  page.jumpToPage(6);
+                },
+                icon: const Icon(Icons.recommend),
+              ),
+              SideMenuItem(
+                priority: 7,
+                title: 'FAQ',
+                onTap: () {
+                  page.jumpToPage(7);
+                },
+                icon: const Icon(Icons.question_answer_rounded),
+              ),
             ],
           ),
           Expanded(
             child: PageView(
               controller: page,
-              children: const [
-                InfoWebPage(),
-                CategoryWebMenuPage(),
-                TriggerWebMenuPage(),
-                DeviceWebMenuPage(),
-                HomeMenuPage(),
+              children: [
+                const InfoWebPage(),
+                const CategoryWebMenuPage(),
+                const TriggerWebMenuPage(),
+                const DeviceWebMenuPage(),
+                const HomeMenuPage(),
+                OnBoardingWebPage(),
+                const RoutineWebPage(
+                  qorderBy: 'Featured',
+                  qequalTo: 'Featured',
+                ),
+                const FrequentlyAskQuestionsPage()
               ],
             ),
           ),

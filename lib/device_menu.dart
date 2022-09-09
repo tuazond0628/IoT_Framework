@@ -68,10 +68,10 @@ class _DeviceMenuPageState extends State<DeviceMenuPage> {
       appBar: (kIsWeb) // running on the web!
           ? null
           : BaseAppBar(
-              title: const Text('DEVICES',
+              title: const Text('Devices',
                   style: TextStyle(
                     fontFamily: 'Proxima',
-                    fontSize: 27,
+                    fontSize: 28,
                     color: Colors.white,
                     shadows: [
                       Shadow(

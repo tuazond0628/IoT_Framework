@@ -122,144 +122,157 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                   ),
                 ),
                 Expanded(
-                  child: Scrollbar(
-                    child: FutureBuilder<DatabaseEvent>(
-                      future: getData(),
-                      builder:
-                          (context, AsyncSnapshot<DatabaseEvent> snapshot) {
-                        if (snapshot.hasData && !snapshot.hasError) {
-                          lists.clear();
+                  child: FutureBuilder<DatabaseEvent>(
+                    future: getData(),
+                    builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
+                      if (snapshot.hasData && !snapshot.hasError) {
+                        lists.clear();
 
-                          final values = snapshot.data?.snapshot.value
-                              as Map<dynamic, dynamic>;
-                          values.forEach((key, values) {
-                            lists.add(values);
-                          });
+                        final values = snapshot.data?.snapshot.value
+                            as Map<dynamic, dynamic>;
+                        values.forEach((key, values) {
+                          lists.add(values);
+                        });
 
-                          return Center(
-                            child: ListView.builder(
-                              itemCount: lists.length,
-                              itemBuilder: (context, index) {
-                                String name = lists[index]
-                                        ['Routine_Description'] +
-                                    lists[index]['Routine_Name'] +
-                                    lists[index]['NumberOfAction'];
+                        return Center(
+                          child: ListView.builder(
+                            itemCount: lists.length,
+                            itemBuilder: (context, index) {
+                              String name = lists[index]
+                                      ['Routine_Description'] +
+                                  lists[index]['Routine_Name'] +
+                                  lists[index]['NumberOfAction'];
 
-                                if (controller.text.isEmpty) {
-                                  return InkWell(
-                                    onTap: () {
-                                      // This Will Call When User Click On ListView Item
-                                      showDialogFunc(
-                                        context,
-                                        lists[index]['Images'],
-                                        lists[index]['Routine_Name'],
-                                        lists[index]['Routine_Description'],
-                                        lists[index]['URL'],
-                                        lists[index]['NumberOfAction'],
-                                        lists[index]['Device_Trigger'],
-                                        lists[index]['Trigger_Group'],
-                                        lists[index]['Device_Group'],
-                                        lists[index]['Action_Group'],
-                                        lists[index]['Active_Days'],
-                                        lists[index]['Category'],
-                                      );
-                                    },
-                                    // Card Which Holds Layout Of ListView Item
-                                    child: Card(
-                                      clipBehavior: Clip.antiAlias,
-                                      elevation: 20,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          gradient: const LinearGradient(
-                                            colors: [
-                                              Color(0xFFF8B7CD),
-                                              Color(0xFFF6D2E0),
-                                              Color(0xFF67A3D9),
-                                              Color(0xFF0671B7),
-                                              Color(0xFF1D63A3),
-                                              Color(0xFF013169),
-                                            ],
-                                            begin: Alignment.bottomRight,
-                                            end: Alignment.topLeft,
-                                          ),
+                              if (controller.text.isEmpty) {
+                                return InkWell(
+                                  onTap: () {
+                                    // This Will Call When User Click On ListView Item
+                                    showDialogFunc(
+                                      context,
+                                      lists[index]['Images'],
+                                      lists[index]['Routine_Name'],
+                                      lists[index]['Routine_Description'],
+                                      lists[index]['URL'],
+                                      lists[index]['NumberOfAction'],
+                                      lists[index]['Device_Trigger'],
+                                      lists[index]['Trigger_Group'],
+                                      lists[index]['Device_Group'],
+                                      lists[index]['Action_Group'],
+                                      lists[index]['Active_Days'],
+                                      lists[index]['Category'],
+                                    );
+                                  },
+                                  // Card Which Holds Layout Of ListView Item
+                                  child: Card(
+                                    clipBehavior: Clip.antiAlias,
+                                    elevation: 20,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        gradient: const LinearGradient(
+                                          colors: [
+                                            Color(0xFFF8B7CD),
+                                            Color(0xFFF6D2E0),
+                                            Color(0xFF67A3D9),
+                                            Color(0xFF0671B7),
+                                            Color(0xFF1D63A3),
+                                            Color(0xFF013169),
+                                          ],
+                                          begin: Alignment.bottomRight,
+                                          end: Alignment.topLeft,
                                         ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: 120,
-                                              height: 120,
-                                              child: Image.asset(
-                                                lists[index]['Images'],
-                                                fit: BoxFit.cover,
-                                              ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: <Widget>[
+                                          SizedBox(
+                                            width: 120,
+                                            height: 120,
+                                            child: Image.asset(
+                                              lists[index]['Images'],
+                                              fit: BoxFit.cover,
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  Container(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              14),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                    color: Colors.white,
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                          color: Colors.white,
+                                                          spreadRadius: 2),
+                                                    ],
+                                                  ),
+                                                  child: Text(
+                                                    '${lists[index]['NumberOfAction']} Action',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontFamily: 'Proxima',
+                                                      fontSize: 13,
+                                                      background: Paint()
+                                                        ..strokeWidth = 13
+                                                        ..color = lists[index][
+                                                                    'NumberOfAction'] ==
+                                                                'Single'
+                                                            ? Colors.pinkAccent
+                                                            : const Color(
+                                                                0xFF1D63A3)
+                                                        ..strokeJoin =
+                                                            StrokeJoin.round
+                                                        ..strokeCap =
+                                                            StrokeCap.round
+                                                        ..style = PaintingStyle
+                                                            .stroke,
                                                       color: Colors.white,
-                                                      boxShadow: const [
-                                                        BoxShadow(
-                                                            color: Colors.white,
-                                                            spreadRadius: 2),
-                                                      ],
                                                     ),
-                                                    child: Text(
-                                                      '${lists[index]['NumberOfAction']} Action',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                        fontFamily: 'Proxima',
-                                                        fontSize: 13,
-                                                        background: Paint()
-                                                          ..strokeWidth = 13
-                                                          ..color = lists[index]
-                                                                      [
-                                                                      'NumberOfAction'] ==
-                                                                  'Single'
-                                                              ? Colors
-                                                                  .pinkAccent
-                                                              : const Color(
-                                                                  0xFF1D63A3)
-                                                          ..strokeJoin =
-                                                              StrokeJoin.round
-                                                          ..strokeCap =
-                                                              StrokeCap.round
-                                                          ..style =
-                                                              PaintingStyle
-                                                                  .stroke,
-                                                        color: Colors.white,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                  lists[index]['Routine_Name'],
+                                                  style: const TextStyle(
+                                                    fontFamily: 'Proxima',
+                                                    color: Colors.white,
+                                                    fontSize: 25,
+                                                    shadows: [
+                                                      Shadow(
+                                                        blurRadius: 10.0,
+                                                        color: Colors.black87,
+                                                        offset:
+                                                            Offset(5.0, 5.0),
                                                       ),
-                                                    ),
+                                                    ],
                                                   ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Text(
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                SizedBox(
+                                                  width: width,
+                                                  child: Text(
                                                     lists[index]
-                                                        ['Routine_Name'],
+                                                        ['Routine_Description'],
+                                                    maxLines: 3,
                                                     style: const TextStyle(
                                                       fontFamily: 'Proxima',
                                                       color: Colors.white,
-                                                      fontSize: 25,
+                                                      fontSize: 15,
                                                       shadows: [
                                                         Shadow(
                                                           blurRadius: 10.0,
@@ -270,156 +283,147 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                                       ],
                                                     ),
                                                   ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  SizedBox(
-                                                    width: width,
-                                                    child: Text(
-                                                      lists[index][
-                                                          'Routine_Description'],
-                                                      maxLines: 3,
-                                                      style: const TextStyle(
-                                                        fontFamily: 'Proxima',
-                                                        color: Colors.white,
-                                                        fontSize: 15,
-                                                        shadows: [
-                                                          Shadow(
-                                                            blurRadius: 10.0,
-                                                            color:
-                                                                Colors.black87,
-                                                            offset: Offset(
-                                                                5.0, 5.0),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ),
-                                  );
-                                } else if (name
-                                    .toLowerCase()
-                                    .contains(controller.text.toLowerCase())) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      // This Will Call When User Click On ListView Item
-                                      showDialogFunc(
-                                        context,
-                                        lists[index]['Images'],
-                                        lists[index]['Routine_Name'],
-                                        lists[index]['Routine_Description'],
-                                        lists[index]['URL'],
-                                        lists[index]['NumberOfAction'],
-                                        lists[index]['Device_Trigger'],
-                                        lists[index]['Trigger_Group'],
-                                        lists[index]['Device_Group'],
-                                        lists[index]['Action_Group'],
-                                        lists[index]['Active_Days'],
-                                        lists[index]['Category'],
-                                      );
-                                    },
-                                    // Card Which Holds Layout Of ListView Item
-                                    child: Card(
-                                      clipBehavior: Clip.antiAlias,
-                                      elevation: 20,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          gradient: const LinearGradient(
-                                            colors: [
-                                              Color(0xFFF8B7CD),
-                                              Color(0xFFF6D2E0),
-                                              Color(0xFF67A3D9),
-                                              Color(0xFF0671B7),
-                                              Color(0xFF1D63A3),
-                                              Color(0xFF013169),
-                                            ],
-                                            begin: Alignment.bottomRight,
-                                            end: Alignment.topLeft,
-                                          ),
+                                  ),
+                                );
+                              } else if (name
+                                  .toLowerCase()
+                                  .contains(controller.text.toLowerCase())) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    // This Will Call When User Click On ListView Item
+                                    showDialogFunc(
+                                      context,
+                                      lists[index]['Images'],
+                                      lists[index]['Routine_Name'],
+                                      lists[index]['Routine_Description'],
+                                      lists[index]['URL'],
+                                      lists[index]['NumberOfAction'],
+                                      lists[index]['Device_Trigger'],
+                                      lists[index]['Trigger_Group'],
+                                      lists[index]['Device_Group'],
+                                      lists[index]['Action_Group'],
+                                      lists[index]['Active_Days'],
+                                      lists[index]['Category'],
+                                    );
+                                  },
+                                  // Card Which Holds Layout Of ListView Item
+                                  child: Card(
+                                    clipBehavior: Clip.antiAlias,
+                                    elevation: 20,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(10)),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        gradient: const LinearGradient(
+                                          colors: [
+                                            Color(0xFFF8B7CD),
+                                            Color(0xFFF6D2E0),
+                                            Color(0xFF67A3D9),
+                                            Color(0xFF0671B7),
+                                            Color(0xFF1D63A3),
+                                            Color(0xFF013169),
+                                          ],
+                                          begin: Alignment.bottomRight,
+                                          end: Alignment.topLeft,
                                         ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: 120,
-                                              height: 120,
-                                              child: Image.asset(
-                                                lists[index]['Images'],
-                                                fit: BoxFit.cover,
-                                              ),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: <Widget>[
+                                          SizedBox(
+                                            width: 120,
+                                            height: 120,
+                                            child: Image.asset(
+                                              lists[index]['Images'],
+                                              fit: BoxFit.cover,
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(10.0),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  Container(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              14),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Container(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14),
+                                                    color: Colors.white,
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                          color: Colors.white,
+                                                          spreadRadius: 2),
+                                                    ],
+                                                  ),
+                                                  child: Text(
+                                                    '${lists[index]['NumberOfAction']} Action',
+                                                    textAlign: TextAlign.center,
+                                                    style: TextStyle(
+                                                      fontFamily: 'Proxima',
+                                                      fontSize: 13,
+                                                      background: Paint()
+                                                        ..strokeWidth = 13
+                                                        ..color = lists[index][
+                                                                    'NumberOfAction'] ==
+                                                                'Single'
+                                                            ? Colors.pinkAccent
+                                                            : const Color(
+                                                                0xFF1D63A3)
+                                                        ..strokeJoin =
+                                                            StrokeJoin.round
+                                                        ..strokeCap =
+                                                            StrokeCap.round
+                                                        ..style = PaintingStyle
+                                                            .stroke,
                                                       color: Colors.white,
-                                                      boxShadow: const [
-                                                        BoxShadow(
-                                                            color: Colors.white,
-                                                            spreadRadius: 2),
-                                                      ],
                                                     ),
-                                                    child: Text(
-                                                      '${lists[index]['NumberOfAction']} Action',
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                        fontFamily: 'Proxima',
-                                                        fontSize: 13,
-                                                        background: Paint()
-                                                          ..strokeWidth = 13
-                                                          ..color = lists[index]
-                                                                      [
-                                                                      'NumberOfAction'] ==
-                                                                  'Single'
-                                                              ? Colors
-                                                                  .pinkAccent
-                                                              : const Color(
-                                                                  0xFF1D63A3)
-                                                          ..strokeJoin =
-                                                              StrokeJoin.round
-                                                          ..strokeCap =
-                                                              StrokeCap.round
-                                                          ..style =
-                                                              PaintingStyle
-                                                                  .stroke,
-                                                        color: Colors.white,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                  lists[index]['Routine_Name'],
+                                                  style: const TextStyle(
+                                                    fontFamily: 'Proxima',
+                                                    color: Colors.white,
+                                                    fontSize: 25,
+                                                    shadows: [
+                                                      Shadow(
+                                                        blurRadius: 10.0,
+                                                        color: Colors.black87,
+                                                        offset:
+                                                            Offset(5.0, 5.0),
                                                       ),
-                                                    ),
+                                                    ],
                                                   ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  Text(
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                SizedBox(
+                                                  width: width,
+                                                  child: Text(
                                                     lists[index]
-                                                        ['Routine_Name'],
+                                                        ['Routine_Description'],
+                                                    maxLines: 3,
                                                     style: const TextStyle(
                                                       fontFamily: 'Proxima',
                                                       color: Colors.white,
-                                                      fontSize: 25,
+                                                      fontSize: 15,
                                                       shadows: [
                                                         Shadow(
                                                           blurRadius: 10.0,
@@ -430,49 +434,24 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                                       ],
                                                     ),
                                                   ),
-                                                  const SizedBox(
-                                                    height: 10,
-                                                  ),
-                                                  SizedBox(
-                                                    width: width,
-                                                    child: Text(
-                                                      lists[index][
-                                                          'Routine_Description'],
-                                                      maxLines: 3,
-                                                      style: const TextStyle(
-                                                        fontFamily: 'Proxima',
-                                                        color: Colors.white,
-                                                        fontSize: 15,
-                                                        shadows: [
-                                                          Shadow(
-                                                            blurRadius: 10.0,
-                                                            color:
-                                                                Colors.black87,
-                                                            offset: Offset(
-                                                                5.0, 5.0),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                                ),
+                                              ],
+                                            ),
+                                          )
+                                        ],
                                       ),
                                     ),
-                                  );
-                                } else {
-                                  return Container();
-                                }
-                              },
-                            ),
-                          );
-                        }
-                        return Container();
-                      },
-                    ),
+                                  ),
+                                );
+                              } else {
+                                return Container();
+                              }
+                            },
+                          ),
+                        );
+                      }
+                      return Container();
+                    },
                   ),
                 ),
               ],
@@ -508,7 +487,7 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                 ),
               ),
               padding: const EdgeInsets.all(10),
-              height: 400,
+              height: 440,
               width: MediaQuery.of(context).size.width * 0.7,
               child: Card(
                 clipBehavior: Clip.antiAlias,
@@ -534,8 +513,8 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       SizedBox(
-                        width: 400,
-                        height: 400,
+                        width: 420,
+                        height: 420,
                         child: Image.asset(
                           img,
                           fit: BoxFit.cover,
