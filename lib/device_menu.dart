@@ -20,45 +20,45 @@ class _DeviceMenuPageState extends State<DeviceMenuPage> {
 
   List<Devices> list = [
     Devices(
-        device: 'Display',
+        device: 'Smart Display',
         orderby: 'Device',
-        equalto: 'Display',
+        equalto: 'Smart Display',
         image: 'images/lottie/display.json'),
     Devices(
-        device: 'Light Bulb',
+        device: 'Smart Light',
         orderby: 'Device',
-        equalto: 'Light Bulb',
+        equalto: 'Smart Light',
         image: 'images/lottie/bulb.json'),
     Devices(
-        device: 'Light Switch',
+        device: 'Smart Plug',
         orderby: 'Device',
-        equalto: 'Light Switch',
-        image: 'images/lottie/lightswitch.json'),
-    Devices(
-        device: 'Power Plug',
-        orderby: 'Device',
-        equalto: 'Power Plug',
+        equalto: 'Smart Plug',
         image: 'images/lottie/plug.json'),
-    Devices(
-        device: 'Smartphone',
-        orderby: 'Device',
-        equalto: 'Smartphone',
-        image: 'images/lottie/phone.json'),
-    Devices(
-        device: 'Speaker',
-        orderby: 'Device',
-        equalto: 'Speaker',
-        image: 'images/lottie/speaker2.json'),
     Devices(
         device: 'Smart Remote',
         orderby: 'Device',
         equalto: 'Smart Remote',
         image: 'images/lottie/remote.json'),
     Devices(
-        device: 'Wall Socket',
+        device: 'Smart Socket',
         orderby: 'Device',
-        equalto: 'Wall Socket',
+        equalto: 'Smart Socket',
         image: 'images/lottie/wallsocket.json'),
+    Devices(
+        device: 'Smart Speaker',
+        orderby: 'Device',
+        equalto: 'Smart Speaker',
+        image: 'images/lottie/speaker2.json'),
+    Devices(
+        device: 'Smart Switch',
+        orderby: 'Device',
+        equalto: 'Smart Switch',
+        image: 'images/lottie/lightswitch.json'),
+    Devices(
+        device: 'Smartphone',
+        orderby: 'Device',
+        equalto: 'Smartphone',
+        image: 'images/lottie/phone.json'),
   ];
 
   @override

@@ -15,27 +15,28 @@ class _ConveniencePageState extends State<FrequentlyAskQuestionsPage> {
     Users(
         name: '1. What is IoT Automation Framework App?',
         subTitle:
-            'The App is a library of ready-to-install automation routines design for Alexa smart home users to accelerate the automation of IoT devices.'),
+            'The App is a library of ready-to-install automation routines design for Alexa App users to accelerate Smart Home automation.'),
     Users(
         name: '2. How to use the IoT Automation Framework App?',
-        subTitle:
-            '1. The user of the App must be an Alexa App smart home user with an IoT devices already setup and installed. '
-            '\n2. Depending on the user needs, '
-            'simply search and filter from list of automation routines and by clicking the "Get" button. \n\nMobile App Version: Automatically open an Alexap App window stating '
-            '"You have received an Alexa Routine". \n\nWeb App Version: Automatically generate a QR code which can be scan by a camera phone.'),
+        subTitle: '1. Depending on the user needs, '
+            'simply search and filter from list of automation routines and by clicking the "Get" button. \n2. Each automation routine is provided with information to help user understand its purpose and the devices it uses to operate. '
+            '\nFor proper guidance, it is hihgly recommended to always read the routine detailed information.'
+            '\n\nMobile App Version: Automatically open an Alexap App window stating '
+            '"You have received an Alexa Routine". \nWeb App Version: Automatically generate a QR code which can be scan by a camera phone.'
+            '\n\n2. The user of the App must be an Alexa App smart home user with an IoT devices already setup and installed.'),
     Users(
         name:
-            '3. What IoT device must a user have to run the automated routines?',
+            '\n3. What IoT device must a user have to run the automated routines?',
         subTitle:
-            '1. The user must at least have a triggering devices installed in their Alexa App. \n\nSee the "Triggers" section of the Framework App for the list of triggering devices.'
-            '\n\n2. Each automation routine is provided with information to help user understand its purpose and the devices it uses to operate.'),
+            'The user must at least have a triggering device installed in their Alexa App. \nSee the "Triggers" section of the Framework App for the list of triggering devices.'),
     Users(
         name:
-            '4. Can the IoT Automation Framework App be used without the Alexa App installed?',
+            '\n4. Can the IoT Automation Framework App be used without the Alexa App installed?',
         subTitle:
-            'The App can run even without the Alexa App, but to use its built-in automation routines, an Alexa app is required to be installed on the same mobile device.'),
+            'Mobile App Version: The app is a standalone App that can run even without the Alexa App, but to use its built-in automation routines, an Alexa app must have been installed on the same mobile device. '
+            '\nWeb App Version: The app generates a QR code which can scan by an Android or iPhone users, an Alexa app must have been installed to open QR code content.'),
     Users(
-        name: '5. How to enable the automation routines in the Alexa App?',
+        name: '\n5. How to enable the automation routines in the Alexa App?',
         subTitle: '1. Click View Routine in the Alexa App. '
             '\n2. Look for options in yellow text, which shows the you need to make a selection to complete the setup.'
             '\n3. Click Save to enable the routine.'
@@ -52,7 +53,23 @@ class _ConveniencePageState extends State<FrequentlyAskQuestionsPage> {
     return Scaffold(
       appBar: (kIsWeb) // running on the web!
           ? AppBar(
-              backgroundColor: const Color(0xFF1D63A3),
+              flexibleSpace: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerRight,
+                    end: Alignment.centerLeft,
+                    colors: <Color>[
+                      Color(0xFFF8B7CD),
+                      // Color(0xFFF6D2E0),
+                      Color(0xFF67A3D9),
+                      Color(0xFF0671B7),
+                      Color(0xFF1D63A3),
+                      // Color(0xFF013169),
+                    ],
+                  ),
+                ),
+              ),
+              // backgroundColor: const Color(0xFF1D63A3),
               elevation: 0,
               centerTitle: true,
               title: const Text('Frequently Ask Questions',
@@ -121,7 +138,7 @@ class _ConveniencePageState extends State<FrequentlyAskQuestionsPage> {
                                   fontFamily: 'Proxima',
                                   color: Colors.black87,
                                   fontSize: (kIsWeb) // running on the web!
-                                      ? 22
+                                      ? 20
                                       : 18,
                                   fontWeight: FontWeight.bold,
                                   shadows: [
@@ -140,7 +157,7 @@ class _ConveniencePageState extends State<FrequentlyAskQuestionsPage> {
                                   fontFamily: 'Proxima',
                                   color: Colors.black87,
                                   fontSize: (kIsWeb) // running on the web!
-                                      ? 20
+                                      ? 18
                                       : 16,
                                 ),
                               ),

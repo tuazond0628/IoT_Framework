@@ -29,9 +29,9 @@ class InfoWebPage extends StatelessWidget {
             children: [
               const Padding(
                 padding: EdgeInsets.all(50.0),
-                child: SizedBox(
-                  height: 20,
-                ),
+                // child: SizedBox(
+                //   height: 20,
+                // ),
               ),
               Align(
                 alignment: FractionalOffset.topCenter,
@@ -50,7 +50,7 @@ class InfoWebPage extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Proxima',
                     color: Colors.white,
-                    fontSize: 30,
+                    fontSize: 40,
                     fontWeight: FontWeight.bold,
                     shadows: [
                       Shadow(
@@ -68,11 +68,11 @@ class InfoWebPage extends StatelessWidget {
               const Align(
                 alignment: FractionalOffset.topCenter,
                 child: Text(
-                  '" Bringing IoT Devices to Life "',
+                  '" Bringing Smart Devices to Life "',
                   style: TextStyle(
                     fontFamily: 'Proxima',
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 26,
                     // fontWeight: FontWeight.bold,
                     shadows: [
                       Shadow(
@@ -89,8 +89,8 @@ class InfoWebPage extends StatelessWidget {
               ),
               Image.asset(
                 'images/tup.png',
-                height: 190,
-                width: 190,
+                height: 300,
+                width: 300,
               ),
               const SizedBox(
                 height: 40,
@@ -104,7 +104,7 @@ class InfoWebPage extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Proxima',
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 26,
                     // fontWeight: FontWeight.bold,
                     shadows: [
                       Shadow(
@@ -116,14 +116,14 @@ class InfoWebPage extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Image.asset(
-                'images/alexa.png',
-                height: 150,
-                width: 150,
-              ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              // Image.asset(
+              //   'images/alexa.png',
+              //   height: 150,
+              //   width: 150,
+              // ),
             ],
           ),
         ),

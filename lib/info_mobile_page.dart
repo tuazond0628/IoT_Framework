@@ -5,24 +5,25 @@ class InfoMobilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          // borderRadius: BorderRadius.circular(20),
-          gradient: LinearGradient(
-            colors: [
-              // Color(0xFFF8B7CD),
-              // Color(0xFFF6D2E0),
-              Color(0xFF67A3D9),
-              Color(0xFF0671B7),
-              Color(0xFF1D63A3),
-              // Color(0xFF013169),
-            ],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-          ),
+    return Container(
+      decoration: const BoxDecoration(
+        // borderRadius: BorderRadius.circular(20),
+        gradient: LinearGradient(
+          colors: [
+            // Color(0xFFF8B7CD),
+            // Color(0xFFF6D2E0),
+            Color(0xFF67A3D9),
+            Color(0xFF0671B7),
+            Color(0xFF1D63A3),
+            // Color(0xFF013169),
+          ],
+          begin: Alignment.bottomCenter,
+          end: Alignment.topCenter,
         ),
-        child: SingleChildScrollView(
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: SingleChildScrollView(
           child: Column(
             children: [
               Align(
@@ -58,7 +59,7 @@ class InfoMobilePage extends StatelessWidget {
               const Align(
                 alignment: FractionalOffset.topCenter,
                 child: Text(
-                  '" Bringing IoT Devices to Life "',
+                  '" Bringing Smart Devices to Life "',
                   style: TextStyle(
                     fontFamily: 'Proxima',
                     color: Colors.white,
@@ -106,14 +107,14 @@ class InfoMobilePage extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              Image.asset(
-                'images/alexa.png',
-                height: 150,
-                width: 150,
-              ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              // Image.asset(
+              //   'images/alexa.png',
+              //   height: 150,
+              //   width: 150,
+              // ),
             ],
           ),
         ),

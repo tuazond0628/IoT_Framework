@@ -25,7 +25,7 @@ class OnBoardingPage extends StatelessWidget {
     PageViewModel(
         title: 'All-In-One Library',
         body:
-            'Enable fast smart home automation with its collection of ready-to-install Alexa routines',
+            'Enable fast smart home automation with a collection of ready-to-install Alexa routines',
         image: Center(
           child: Image.asset(
             'images/alexa3.png',

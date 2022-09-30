@@ -70,7 +70,23 @@ class _RoutineWebPageState extends State<RoutineWebPage>
     return Scaffold(
       backgroundColor: const Color(0xFF1D63A3),
       appBar: AppBar(
-          backgroundColor: Colors.transparent,
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.centerRight,
+                end: Alignment.centerLeft,
+                colors: <Color>[
+                  Color(0xFFF8B7CD),
+                  // Color(0xFFF6D2E0),
+                  Color(0xFF67A3D9),
+                  Color(0xFF0671B7),
+                  Color(0xFF1D63A3),
+                  // Color(0xFF013169),
+                ],
+              ),
+            ),
+          ),
+          // backgroundColor: Colors.transparent,
           elevation: 0,
           centerTitle: true,
           title: Text('${widget.qequalTo} Routines',
@@ -141,7 +157,8 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                               String name = lists[index]
                                       ['Routine_Description'] +
                                   lists[index]['Routine_Name'] +
-                                  lists[index]['NumberOfAction'];
+                                  lists[index]['NumberOfAction'] +
+                                  lists[index]['Category'];
 
                               if (controller.text.isEmpty) {
                                 return InkWell(
@@ -160,6 +177,7 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                       lists[index]['Action_Group'],
                                       lists[index]['Active_Days'],
                                       lists[index]['Category'],
+                                      lists[index]['NumberOfAction'],
                                     );
                                   },
                                   // Card Which Holds Layout Of ListView Item
@@ -175,11 +193,11 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                         gradient: const LinearGradient(
                                           colors: [
                                             Color(0xFFF8B7CD),
-                                            Color(0xFFF6D2E0),
-                                            Color(0xFF67A3D9),
+                                            // Color(0xFFF6D2E0),
+                                            // Color(0xFF67A3D9),
                                             Color(0xFF0671B7),
                                             Color(0xFF1D63A3),
-                                            Color(0xFF013169),
+                                            // Color(0xFF013169),
                                           ],
                                           begin: Alignment.bottomRight,
                                           end: Alignment.topLeft,
@@ -190,8 +208,8 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                             MainAxisAlignment.start,
                                         children: <Widget>[
                                           SizedBox(
-                                            width: 120,
-                                            height: 120,
+                                            width: 125,
+                                            height: 125,
                                             child: Image.asset(
                                               lists[index]['Images'],
                                               fit: BoxFit.cover,
@@ -242,14 +260,14 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                                   ),
                                                 ),
                                                 const SizedBox(
-                                                  height: 10,
+                                                  height: 7,
                                                 ),
                                                 Text(
                                                   lists[index]['Routine_Name'],
                                                   style: const TextStyle(
                                                     fontFamily: 'Proxima',
                                                     color: Colors.white,
-                                                    fontSize: 25,
+                                                    fontSize: 24,
                                                     shadows: [
                                                       Shadow(
                                                         blurRadius: 10.0,
@@ -261,7 +279,7 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                                   ),
                                                 ),
                                                 const SizedBox(
-                                                  height: 10,
+                                                  height: 7,
                                                 ),
                                                 SizedBox(
                                                   width: width,
@@ -272,11 +290,34 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                                     style: const TextStyle(
                                                       fontFamily: 'Proxima',
                                                       color: Colors.white,
-                                                      fontSize: 15,
+                                                      fontSize: 16,
                                                       shadows: [
                                                         Shadow(
                                                           blurRadius: 10.0,
                                                           color: Colors.black87,
+                                                          offset:
+                                                              Offset(5.0, 5.0),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 7,
+                                                ),
+                                                SizedBox(
+                                                  width: width,
+                                                  child: Text(
+                                                    'Tag: ${lists[index]['Category']}',
+                                                    maxLines: 3,
+                                                    style: const TextStyle(
+                                                      fontFamily: 'Proxima',
+                                                      color: Colors.white,
+                                                      fontSize: 12,
+                                                      shadows: [
+                                                        Shadow(
+                                                          blurRadius: 10.0,
+                                                          color: Colors.black54,
                                                           offset:
                                                               Offset(5.0, 5.0),
                                                         ),
@@ -295,7 +336,7 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                               } else if (name
                                   .toLowerCase()
                                   .contains(controller.text.toLowerCase())) {
-                                return GestureDetector(
+                                return InkWell(
                                   onTap: () {
                                     // This Will Call When User Click On ListView Item
                                     showDialogFunc(
@@ -311,6 +352,7 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                       lists[index]['Action_Group'],
                                       lists[index]['Active_Days'],
                                       lists[index]['Category'],
+                                      lists[index]['NumberOfAction'],
                                     );
                                   },
                                   // Card Which Holds Layout Of ListView Item
@@ -326,11 +368,11 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                         gradient: const LinearGradient(
                                           colors: [
                                             Color(0xFFF8B7CD),
-                                            Color(0xFFF6D2E0),
-                                            Color(0xFF67A3D9),
+                                            // Color(0xFFF6D2E0),
+                                            // Color(0xFF67A3D9),
                                             Color(0xFF0671B7),
                                             Color(0xFF1D63A3),
-                                            Color(0xFF013169),
+                                            // Color(0xFF013169),
                                           ],
                                           begin: Alignment.bottomRight,
                                           end: Alignment.topLeft,
@@ -341,8 +383,8 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                             MainAxisAlignment.start,
                                         children: <Widget>[
                                           SizedBox(
-                                            width: 120,
-                                            height: 120,
+                                            width: 125,
+                                            height: 125,
                                             child: Image.asset(
                                               lists[index]['Images'],
                                               fit: BoxFit.cover,
@@ -393,14 +435,14 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                                   ),
                                                 ),
                                                 const SizedBox(
-                                                  height: 10,
+                                                  height: 7,
                                                 ),
                                                 Text(
                                                   lists[index]['Routine_Name'],
                                                   style: const TextStyle(
                                                     fontFamily: 'Proxima',
                                                     color: Colors.white,
-                                                    fontSize: 25,
+                                                    fontSize: 24,
                                                     shadows: [
                                                       Shadow(
                                                         blurRadius: 10.0,
@@ -412,7 +454,7 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                                   ),
                                                 ),
                                                 const SizedBox(
-                                                  height: 10,
+                                                  height: 7,
                                                 ),
                                                 SizedBox(
                                                   width: width,
@@ -423,11 +465,34 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                                     style: const TextStyle(
                                                       fontFamily: 'Proxima',
                                                       color: Colors.white,
-                                                      fontSize: 15,
+                                                      fontSize: 16,
                                                       shadows: [
                                                         Shadow(
                                                           blurRadius: 10.0,
                                                           color: Colors.black87,
+                                                          offset:
+                                                              Offset(5.0, 5.0),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 7,
+                                                ),
+                                                SizedBox(
+                                                  width: width,
+                                                  child: Text(
+                                                    'Tag: ${lists[index]['Category']}',
+                                                    maxLines: 3,
+                                                    style: const TextStyle(
+                                                      fontFamily: 'Proxima',
+                                                      color: Colors.white,
+                                                      fontSize: 12,
+                                                      shadows: [
+                                                        Shadow(
+                                                          blurRadius: 10.0,
+                                                          color: Colors.black54,
                                                           offset:
                                                               Offset(5.0, 5.0),
                                                         ),
@@ -463,9 +528,22 @@ class _RoutineWebPageState extends State<RoutineWebPage>
   }
 
 // This is a block of Model Dialog
-  showDialogFunc(context, img, title, desc, url, action, devicetrigger,
-      triggergroup, devicegroup, actiongroup, schedule, category) {
+  showDialogFunc(
+      context,
+      img,
+      title,
+      desc,
+      url,
+      action,
+      devicetrigger,
+      triggergroup,
+      devicegroup,
+      actiongroup,
+      schedule,
+      category,
+      numberactions) {
     return showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) {
         return Center(
@@ -533,11 +611,11 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                     style: const TextStyle(
                                       fontFamily: 'Proxima',
                                       color: Colors.white,
-                                      fontSize: 25,
+                                      fontSize: 22,
                                       shadows: [
                                         Shadow(
-                                          blurRadius: 10.0,
-                                          color: Colors.black87,
+                                          blurRadius: 22.0,
+                                          color: Colors.black,
                                           offset: Offset(5.0, 5.0),
                                         ),
                                       ],
@@ -551,11 +629,12 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                     style: const TextStyle(
                                       fontFamily: 'Proxima',
                                       color: Colors.white,
-                                      fontSize: 15,
+                                      fontSize: 16,
+                                      fontStyle: FontStyle.italic,
                                       shadows: [
                                         Shadow(
-                                          blurRadius: 10.0,
-                                          color: Colors.black87,
+                                          blurRadius: 16.0,
+                                          color: Colors.black,
                                           offset: Offset(5.0, 5.0),
                                         ),
                                       ],
@@ -569,7 +648,35 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                       style: const TextStyle(
                                           fontFamily: 'Proxima',
                                           color: Colors.white,
-                                          fontSize: 16,
+                                          fontSize: 13,
+                                          fontStyle: FontStyle.italic,
+                                          height: 1.0),
+                                      children: [
+                                        const TextSpan(
+                                          text: '',
+                                        ),
+                                        // const WidgetSpan(
+                                        //   child: Icon(
+                                        //     Icons.tag_rounded,
+                                        //     color: Colors.white,
+                                        //   ),
+                                        // ),
+                                        TextSpan(
+                                          text:
+                                              'Tag: $category, $numberactions Action',
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text.rich(
+                                    TextSpan(
+                                      style: const TextStyle(
+                                          fontFamily: 'Proxima',
+                                          color: Colors.white,
+                                          fontSize: 14,
                                           height: 1.0),
                                       children: [
                                         const TextSpan(
@@ -595,7 +702,7 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                       style: const TextStyle(
                                           fontFamily: 'Proxima',
                                           color: Colors.white,
-                                          fontSize: 16,
+                                          fontSize: 14,
                                           height: 1.0),
                                       children: [
                                         const TextSpan(
@@ -621,7 +728,7 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                       style: const TextStyle(
                                           fontFamily: 'Proxima',
                                           color: Colors.white,
-                                          fontSize: 16,
+                                          fontSize: 14,
                                           height: 1.0),
                                       children: [
                                         const TextSpan(
@@ -647,7 +754,7 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                       style: const TextStyle(
                                           fontFamily: 'Proxima',
                                           color: Colors.white,
-                                          fontSize: 16,
+                                          fontSize: 14,
                                           height: 1.0),
                                       children: [
                                         const TextSpan(
@@ -673,7 +780,7 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                       style: const TextStyle(
                                           fontFamily: 'Proxima',
                                           color: Colors.white,
-                                          fontSize: 16,
+                                          fontSize: 14,
                                           height: 1.0),
                                       children: [
                                         const TextSpan(
@@ -707,7 +814,7 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                           'Back',
                                           style: TextStyle(
                                             fontFamily: 'Proxima',
-                                            fontSize: 18,
+                                            fontSize: 14,
                                             color: Colors.white,
                                           ),
                                         ), //label text
@@ -724,7 +831,7 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                                 RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            18.0),
+                                                            14.0),
                                                     side: BorderSide(
                                                         color: action ==
                                                                 'Single'
@@ -745,7 +852,7 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                           'Get',
                                           style: TextStyle(
                                             fontFamily: 'Proxima',
-                                            fontSize: 18,
+                                            fontSize: 14,
                                             color: Colors.white,
                                           ),
                                         ), //label text
@@ -762,14 +869,14 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                                                 RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
-                                                            18.0),
+                                                            14.0),
                                                     side: BorderSide(
                                                         color: action ==
                                                                 'Single'
                                                             ? Colors.pinkAccent
                                                             : const Color(
                                                                 0xFF1D63A3)))))),
-                                    const SizedBox(height: 45)
+                                    const SizedBox(height: 38)
                                   ],
                                 ),
                               ]),
@@ -787,39 +894,16 @@ class _RoutineWebPageState extends State<RoutineWebPage>
   }
 
   void showSuccessfulDialog() => showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) => Dialog(
-              child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Center(
-              child: Text(
-                'Alexa App QR Code successfully created.',
-                style: TextStyle(
-                  fontFamily: 'Proxima',
-                  fontSize: 20,
-                  background: Paint()
-                    ..strokeWidth = 20
-                    ..color = Colors.pinkAccent
-                    ..strokeJoin = StrokeJoin.round
-                    ..strokeCap = StrokeCap.round
-                    ..style = PaintingStyle.stroke,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: Lottie.asset(
-                'images/lottie/successweb.json',
-                height: 300,
-                width: 300,
-              ),
-            ),
-            Center(
-              child: GestureDetector(
-                onTap: () => Navigator.pop(context),
+              child: SizedBox(
+            width: 400,
+            height: 350,
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Center(
                 child: Text(
-                  'Go Back!',
+                  'QR Code successfully created',
                   style: TextStyle(
                     fontFamily: 'Proxima',
                     fontSize: 20,
@@ -833,9 +917,37 @@ class _RoutineWebPageState extends State<RoutineWebPage>
                   ),
                 ),
               ),
-            ),
-            const SizedBox(height: 25)
-          ])));
+              const SizedBox(height: 20),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: Lottie.asset(
+                  'images/lottie/successweb.json',
+                  height: 250,
+                  width: 250,
+                ),
+              ),
+              Center(
+                child: InkWell(
+                  onTap: () => Navigator.pop(context),
+                  child: Text(
+                    'Go Back!',
+                    style: TextStyle(
+                      fontFamily: 'Proxima',
+                      fontSize: 20,
+                      background: Paint()
+                        ..strokeWidth = 20
+                        ..color = Colors.pinkAccent
+                        ..strokeJoin = StrokeJoin.round
+                        ..strokeCap = StrokeCap.round
+                        ..style = PaintingStyle.stroke,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 25)
+            ]),
+          )));
 
   void hyperlink() async {
     await launchUrlString(link, mode: LaunchMode.externalApplication);
